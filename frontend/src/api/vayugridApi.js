@@ -1,8 +1,10 @@
 import { CITIES, DEFAULT_CITY } from '../constants/cities';
 import { MOCK_INCIDENTS_ALL, MOCK_INCIDENT_DELHI } from '../constants/mockData';
 
-const rawUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
-const API_BASE = rawUrl.endsWith('/api/v1') ? rawUrl : `${rawUrl.replace(/\/$/, '')}/api/v1`;
+const isBrowser = typeof window !== 'undefined';
+const isProdHost = isBrowser && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+const rawUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || (isProdHost ? '' : 'http://localhost:8000');
+const API_BASE = rawUrl ? (rawUrl.endsWith('/api/v1') ? rawUrl : `${rawUrl.replace(/\/$/, '')}/api/v1`) : '/api/v1';
 
 /**
  * Fetch statutory monitoring cities
