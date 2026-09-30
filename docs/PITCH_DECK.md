@@ -12,7 +12,7 @@
 * **Background:** Deep slate navy (`#0B1120`) with subtle flowing wind streamline graphics in cyan/emerald.
 * **Hero Branding:** Bold typography: **VayuGrid (वायुग्रिड)**.
 * **Subtitle:** Planetary-to-Pavement Digital Public Good for Pan-India Air Pollution Governance.
-* **Technology Badges:** `Powered by Google Gemini 1.5 Flash` • `Google Maps Platform` • `Open-Meteo Micrometeorology` • `Google Cloud Run`.
+* **Technology Badges:** `Powered by Google Gemini 3.5 Flash-Lite` • `Google Maps Platform` • `Open-Meteo Micrometeorology` • `Google Cloud Run`.
 * **Presenter Footnote:** Presented by Team VayuGrid (4 Dedicated Systems Engineers).
 
 ### Verbatim Speaker Script
@@ -63,12 +63,12 @@
 
 ---
 
-## Slide 4: Google Gemini 1.5 Flash Vision: Chief Environmental Auditor
+## Slide 4: Google Gemini 3.5 Flash-Lite Vision: Chief Environmental Auditor
 
 ### Visual Layout & Graphic Composition
 * **Live Inspection UI Mockup:**
   * Left: Uploaded smartphone photograph of open municipal plastic burning with detected GPS coordinates.
-  * Center: Gemini 1.5 Flash Vision Multimodal Processing Pipeline.
+  * Center: Gemini 3.5 Flash-Lite Vision Multimodal Processing Pipeline.
   * Right: Structured JSON Audit Card highlighting:
     - **Classification:** `OPEN_MUNICIPAL_WASTE_BURNING` (94% Confidence).
     - **Optical Opacity:** 0.88 (Dense Particulate Pyrolysis).
@@ -76,7 +76,7 @@
     - **Statutory Bylaw Recommendation:** Deploy Anti-Smog Water Cannon Unit under Section 133 CrPC / Air Act 1981.
 
 ### Verbatim Speaker Script
-> *"At the heart of Tier-C is our multimodal AI auditor, powered by Google Gemini 1.5 Flash.  
+> *"At the heart of Tier-C is our multimodal AI auditor, powered by Google Gemini 3.5 Flash-Lite.  
 > When an image is submitted, Gemini doesn't just describe the photo. It runs an anti-spoofing check to ensure it's not a computer screen or indoor photo, classifies the emission into one of six statutory Indian archetypes—such as open waste burning or construction dust—estimates optical plume opacity, and generates legally binding intervention recommendations in strict, deterministic JSON with zero hallucination."*
 
 ---
@@ -163,7 +163,7 @@
 
 ### Visual Layout & Graphic Composition
 * **Google Tech Architecture Diagram:**
-  * **Google Gemini 1.5 Flash:** Multimodal image forensics, anti-spoofing verification, structured JSON output.
+  * **Google Gemini 3.5 Flash-Lite:** Multimodal image forensics, anti-spoofing verification, structured JSON output.
   * **Google Maps Platform:** JavaScript Maps API vector rendering, polygon plume projection, marker clustering.
   * **Google Earth Engine (GEE):** Planetary Sentinel-5P tropospheric $NO_2$ column densities and thermal hotspot tracking.
   * **Google Cloud Text-to-Speech:** High-fidelity multilingual neural audio synthesis across Indian language locales.
@@ -171,7 +171,7 @@
 
 ### Verbatim Speaker Script
 > *"VayuGrid leverages the full power of the Google ecosystem.  
-> We use Gemini 1.5 Flash for high-speed, zero-temperature vision reasoning; Google Maps Platform for tactical geospatial rendering; Google Earth Engine for planetary satellite layers; Google Cloud Text-to-Speech for authentic native Indian voice alerts; and Google Cloud Run for auto-scaling, low-latency microservice execution across Indian regions."*
+> We use Gemini 3.5 Flash-Lite for high-speed, zero-temperature vision reasoning; Google Maps Platform for tactical geospatial rendering; Google Earth Engine for planetary satellite layers; Google Cloud & Web Speech TTS for authentic native Indian voice alerts; and Google Cloud Run for auto-scaling, low-latency microservice execution across Indian regions."*
 
 ---
 

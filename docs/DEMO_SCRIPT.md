@@ -49,7 +49,7 @@
     * Optical Smoke Opacity: `0.88 (Severe)`
     * Statutory Bylaw Action: *Deploy Water Sprinkler Tanker and Issue Bylaw Fine*.
 * **Speaker:**
-  > *"Watch this in real-time. A citizen or sanitation worker snaps a photo of an active roadside fire. Our backend routes this to Gemini 1.5 Flash using a strict structured JSON schema. Notice the anti-spoofing verification — any indoor photo or screenshot is instantly rejected. Gemini extracts the optical opacity score, classifies the emission into one of six statutory categories, and automatically drafts an administrative enforcement order under municipal bylaws."*
+  > *"Watch this in real-time. A citizen or sanitation worker snaps a photo of an active roadside fire. Our backend routes this to Gemini 3.5 Flash-Lite using a strict structured JSON schema. Notice the anti-spoofing verification — any indoor photo or screenshot is instantly rejected. Gemini extracts the optical opacity score, classifies the emission into one of six statutory categories, and automatically drafts an administrative enforcement order under municipal bylaws."*
 
 ---
 

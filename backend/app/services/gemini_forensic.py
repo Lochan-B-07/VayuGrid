@@ -1,7 +1,7 @@
 """
 VayuGrid Gemini Multimodal Forensic Audit Service
 Executes zero-temperature forensic audits of environmental pollution imagery using
-Google Gemini Flash (1.5 / 2.5) with anti-spoofing verification and strict Pydantic validation.
+Google Gemini 3.5 Flash-Lite with anti-spoofing verification and strict Pydantic validation.
 """
 
 import json
@@ -45,22 +45,31 @@ class GeminiForensicService:
         self._is_initialized = False
 
         if HAS_GENAI and self.api_key and self.api_key not in ("your_gemini_api_key_here", "mock_key"):
-            try:
-                genai.configure(api_key=self.api_key)
-                self._model = genai.GenerativeModel(
-                    model_name=self.model_name,
-                    system_instruction=GEMINI_FORENSIC_SYSTEM_PROMPT,
-                    generation_config={
-                        "temperature": settings.GEMINI_TEMPERATURE,
-                        "top_p": 0.95,
-                        "response_mime_type": "application/json"
-                    }
-                )
-                self._is_initialized = True
-                logger.info(f"Gemini Forensic Engine initialized successfully with model: {self.model_name}")
-            except Exception as e:
-                logger.error(f"Failed to initialize Gemini GenerativeModel: {e}. Fallback enabled.")
-                self._is_initialized = False
+            candidate_models = [self.model_name]
+            for alt in ["gemini-3.5-flash-lite", "gemini-flash-lite-latest", "gemini-2.0-flash-lite", "gemini-1.5-flash"]:
+                if alt not in candidate_models:
+                    candidate_models.append(alt)
+
+            for cand in candidate_models:
+                try:
+                    genai.configure(api_key=self.api_key)
+                    self._model = genai.GenerativeModel(
+                        model_name=cand,
+                        system_instruction=GEMINI_FORENSIC_SYSTEM_PROMPT,
+                        generation_config={
+                            "temperature": settings.GEMINI_TEMPERATURE,
+                            "top_p": 0.95,
+                            "response_mime_type": "application/json"
+                        }
+                    )
+                    self._is_initialized = True
+                    self.model_name = cand
+                    logger.info(f"Gemini Forensic Engine initialized successfully with model: {cand}")
+                    break
+                except Exception as e:
+                    logger.warning(f"Could not initialize with candidate model {cand}: {e}")
+            if not self._is_initialized:
+                logger.error("Failed to initialize any candidate Gemini GenerativeModel. Fallback enabled.")
         else:
             logger.info("Gemini API key not configured. Using offline statutory forensic simulation mode.")
 
@@ -126,11 +135,13 @@ class GeminiForensicService:
 
         candidate_models = [
             self.model_name,
+            "gemini-3.5-flash-lite",
             "gemini-flash-lite-latest",
             "gemini-2.5-flash-lite",
             "gemini-3.1-flash-lite-preview",
             "gemini-flash-latest",
-            "gemini-3.8-flash",
+            "gemini-2.0-flash-lite",
+            "gemini-1.5-flash",
         ]
         # Deduplicate while preserving priority order
         seen = set()

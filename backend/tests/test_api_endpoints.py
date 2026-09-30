@@ -94,6 +94,11 @@ def test_active_incidents_list():
     assert len(incidents) >= 1
     assert incidents[0]["city_id"] == "delhi_ncr"
 
+    res_alias = client.get("/api/v1/incidents/active?city_id=delhi")
+    assert res_alias.status_code == 200
+    incidents_alias = res_alias.json()
+    assert len(incidents_alias) >= 1
+
 
 def test_get_incident_by_id():
     res = client.get("/api/v1/incidents/VAYU-DEL-2861-7720-A4F9")
@@ -147,4 +152,37 @@ def test_middleware_headers():
     assert res.status_code == 200
     assert "x-process-time" in res.headers
     assert "x-request-id" in res.headers
+
+
+def test_vernacular_endpoints():
+    res_syn = client.post(
+        "/api/v1/vernacular/synthesize",
+        json={
+            "source_classification": "OPEN_MUNICIPAL_WASTE_BURNING",
+            "severity_score": 0.85,
+            "city_name": "Delhi-NCR",
+            "detected_markers": ["Dense smoke"],
+        },
+    )
+    assert res_syn.status_code == 200
+    advisories = res_syn.json()
+    assert "en" in advisories
+    assert "hi" in advisories
+    assert "te" in advisories
+    assert "kn" in advisories
+    assert "ta" in advisories
+    assert "ml" in advisories
+
+    res_aud = client.post(
+        "/api/v1/vernacular/audio",
+        json={
+            "text": "Dense toxic smoke detected nearby. Stay indoors.",
+            "language_code": "hi",
+        },
+    )
+    assert res_aud.status_code == 200
+    aud = res_aud.json()
+    assert aud["language_code"] == "hi"
+    assert "audio_base64" in aud or aud.get("audio_source") == "SYNTHESIZED_FALLBACK"
+
 

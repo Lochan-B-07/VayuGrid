@@ -1,8 +1,8 @@
 """
 VayuGrid Vernacular Translation & Speech Synthesis Engine
 Generates high-precision citizen health advisories across 6 Indian languages
-(English, Hindi, Telugu, Kannada, Tamil, Malayalam) and synthesizes audio streams
-via Google Cloud Text-to-Speech with browser Web Speech API fallbacks.
+(English, Hindi, Telugu, Kannada, Tamil, Malayalam) via Google Gemini 3.5 Flash-Lite,
+and directs audio synthesis using built-in browser Web Speech API (with optional Google Cloud TTS).
 """
 
 import base64
@@ -63,20 +63,23 @@ class VernacularService:
         self._genai_model = None
 
         # Initialize Gemini for translation if credentials exist
-        if HAS_GENAI and self.api_key and self.api_key != "your_gemini_api_key_here":
-            try:
-                genai.configure(api_key=self.api_key)
-                self._genai_model = genai.GenerativeModel(
-                    model_name=settings.GEMINI_MODEL,
-                    system_instruction=VERNACULAR_TRANSLATION_SYSTEM_PROMPT,
-                    generation_config={
-                        "temperature": 0.2,
-                        "top_p": 0.9,
-                        "response_mime_type": "application/json"
-                    }
-                )
-            except Exception as e:
-                logger.warning(f"Could not initialize Gemini for translation: {e}")
+        if HAS_GENAI and self.api_key and self.api_key not in ("your_gemini_api_key_here", "mock_key"):
+            candidate_models = [settings.GEMINI_MODEL, "gemini-3.5-flash-lite", "gemini-flash-lite-latest", "gemini-2.0-flash-lite", "gemini-1.5-flash"]
+            for cand in candidate_models:
+                try:
+                    genai.configure(api_key=self.api_key)
+                    self._genai_model = genai.GenerativeModel(
+                        model_name=cand,
+                        system_instruction=VERNACULAR_TRANSLATION_SYSTEM_PROMPT,
+                        generation_config={
+                            "temperature": 0.2,
+                            "top_p": 0.9,
+                            "response_mime_type": "application/json"
+                        }
+                    )
+                    break
+                except Exception as e:
+                    logger.warning(f"Could not initialize Gemini for translation with model {cand}: {e}")
 
         # Initialize GCP Text-to-Speech if credentials exist
         if HAS_GCP_TTS and settings.GOOGLE_APPLICATION_CREDENTIALS:

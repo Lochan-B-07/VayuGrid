@@ -158,9 +158,16 @@ class TicketService:
 
         if city_id:
             target_city = city_id.lower().replace("-", "_")
+            alias_map = {
+                "delhi": "delhi_ncr",
+                "delhi_ncr": "delhi",
+            }
             results = [
                 inc for inc in results
-                if inc.city_id and inc.city_id.lower().replace("-", "_") == target_city
+                if inc.city_id and (
+                    inc.city_id.lower().replace("-", "_") == target_city
+                    or inc.city_id.lower().replace("-", "_") == alias_map.get(target_city, "")
+                )
             ]
 
         if status:

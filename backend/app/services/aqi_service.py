@@ -180,6 +180,8 @@ class AQIService:
         # 2. Return pre-configured high-fidelity CPCB flagship stations
         if city_id:
             slug = city_id.lower().replace("-", "_")
+            if slug == "delhi":
+                slug = "delhi_ncr"
             if slug in FLAGSHIP_STATIONS:
                 return FLAGSHIP_STATIONS[slug]
 

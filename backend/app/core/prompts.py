@@ -1,7 +1,7 @@
 """
 VayuGrid Gemini Multimodal & Vernacular Intelligence Prompts
 Defines zero-temperature system prompts, anti-spoofing verification heuristics,
-and structured JSON response schemas for Gemini Flash.
+and structured JSON response schemas for Google Gemini 3.5 Flash-Lite.
 """
 
 # ==============================================================================

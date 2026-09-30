@@ -47,6 +47,10 @@ def test_query_filter_by_city(service):
     assert len(delhi_incidents) >= 1
     assert all(inc.city_id == "delhi_ncr" for inc in delhi_incidents)
 
+    delhi_alias = service.list_incidents(city_id="delhi")
+    assert len(delhi_alias) >= 1
+    assert all(inc.city_id == "delhi_ncr" for inc in delhi_alias)
+
     blr_incidents = service.list_incidents(city_id="bengaluru")
     assert len(blr_incidents) >= 1
     assert all(inc.city_id == "bengaluru" for inc in blr_incidents)

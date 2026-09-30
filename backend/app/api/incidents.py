@@ -139,7 +139,19 @@ async def _execute_audit_pipeline(
             ),
         )
         ticket_service.create_incident(rejected_record)
-        return rejected_record.model_dump()
+        d = rejected_record.model_dump()
+        d["is_valid"] = False
+        d["rejection_reason"] = rejected_record.verification.rejection_reason
+        d["timestamp"] = rejected_record.created_at
+        d["classification"] = source_class_str
+        d["severity_score"] = audit_result.severity_score
+        d["confidence"] = audit_result.confidence_score
+        d["location"] = {
+            "lat": latitude,
+            "lng": longitude,
+            "address_hint": rejected_record.coordinates.address_hint,
+        }
+        return d
 
     # 3. Ingest Live Meteorology from Open-Meteo with regional fallback
     weather = await weather_service.get_live_weather(
@@ -232,7 +244,20 @@ async def _execute_audit_pipeline(
 
     # Persist in TicketService
     ticket_service.create_incident(record)
-    return record.model_dump()
+    res_dict = record.model_dump()
+    res_dict["timestamp"] = record.created_at
+    res_dict["classification"] = record.verification.source_classification
+    res_dict["severity_score"] = record.verification.severity_score
+    res_dict["confidence"] = record.verification.confidence_score
+    res_dict["visual_markers"] = record.verification.detected_visual_markers
+    res_dict["is_valid"] = record.verification.is_valid_environmental_hazard
+    res_dict["rejection_reason"] = record.verification.rejection_reason
+    res_dict["location"] = {
+        "lat": latitude,
+        "lng": longitude,
+        "address_hint": record.coordinates.address_hint,
+    }
+    return res_dict
 
 
 @router.post(
@@ -378,7 +403,23 @@ async def get_active_incidents(
         limit=limit,
         offset=offset,
     )
-    return [inc.model_dump() for inc in incidents]
+    results = []
+    for inc in incidents:
+        d = inc.model_dump()
+        d["timestamp"] = inc.created_at
+        d["classification"] = inc.verification.source_classification
+        d["severity_score"] = inc.verification.severity_score
+        d["confidence"] = inc.verification.confidence_score
+        d["visual_markers"] = inc.verification.detected_visual_markers
+        d["is_valid"] = inc.verification.is_valid_environmental_hazard
+        d["rejection_reason"] = inc.verification.rejection_reason
+        d["location"] = {
+            "lat": inc.coordinates.latitude,
+            "lng": inc.coordinates.longitude,
+            "address_hint": inc.coordinates.address_hint,
+        }
+        results.append(d)
+    return results
 
 
 @router.get(
@@ -394,7 +435,20 @@ async def get_incident_by_id(ticket_id: str):
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Ticket '{ticket_id}' not found in registry.",
         )
-    return incident.model_dump()
+    d = incident.model_dump()
+    d["timestamp"] = incident.created_at
+    d["classification"] = incident.verification.source_classification
+    d["severity_score"] = incident.verification.severity_score
+    d["confidence"] = incident.verification.confidence_score
+    d["visual_markers"] = incident.verification.detected_visual_markers
+    d["is_valid"] = incident.verification.is_valid_environmental_hazard
+    d["rejection_reason"] = incident.verification.rejection_reason
+    d["location"] = {
+        "lat": incident.coordinates.latitude,
+        "lng": incident.coordinates.longitude,
+        "address_hint": incident.coordinates.address_hint,
+    }
+    return d
 
 
 @router.post(

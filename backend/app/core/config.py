@@ -18,7 +18,7 @@ class Settings(BaseSettings):
 
     # Google Gemini AI & Generative AI SDK
     GEMINI_API_KEY: Optional[str] = None
-    GEMINI_MODEL: str = "gemini-flash-lite-latest"
+    GEMINI_MODEL: str = "gemini-3.5-flash-lite"
     GEMINI_TEMPERATURE: float = 0.0  # Zero-temperature for deterministic forensic audit
 
     # Google Cloud & Text-to-Speech
@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     OPENAQ_API_KEY: Optional[str] = None
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=(".env", "../.env"),
         env_file_encoding="utf-8",
         extra="ignore",
     )

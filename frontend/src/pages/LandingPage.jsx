@@ -44,7 +44,7 @@ export function LandingPage() {
               Federated Planetary-to-Pavement Digital Public Good for Air Pollution Governance
             </h1>
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-sans max-w-3xl font-medium">
-              <strong className="text-blue-700 font-bold">VayuGrid (वायु-सूत्र)</strong> connects statutory CPCB IoT sensor telemetry, multimodal Gemini 2.5 Flash forensic image verification, and atmospheric Gaussian plume physics into an automated municipal enforcement grid.
+              <strong className="text-blue-700 font-bold">VayuGrid (वायु-सूत्र)</strong> connects statutory CPCB IoT sensor telemetry, multimodal Gemini 3.5 Flash-Lite forensic image verification, and atmospheric Gaussian plume physics into an automated municipal enforcement grid.
             </p>
           </div>
 
@@ -238,7 +238,7 @@ export function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-700">
             <div className="space-y-1.5 border-l-2 border-indigo-600 pl-3.5">
-              <span className="font-bold text-slate-900 font-mono block">1. GEMINI 2.5 FLASH FORENSICS</span>
+              <span className="font-bold text-slate-900 font-mono block">1. GEMINI 3.5 FLASH-LITE FORENSICS</span>
               <p className="text-2xs text-slate-600 leading-relaxed font-normal">
                 Multimodal classification checks for optical smoke density, flame spectra, and chlorinated polymer pyrolysis with strict JSON schema validation.
               </p>

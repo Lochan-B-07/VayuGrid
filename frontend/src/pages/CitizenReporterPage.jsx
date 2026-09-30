@@ -135,7 +135,7 @@ export function CitizenReporterPage() {
           <div className="space-y-1">
             <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 font-mono text-2xs font-bold">
               <Sparkles className="h-3 w-3 text-blue-600" />
-              <span>GEMINI 2.5 FLASH FORENSIC INGEST</span>
+              <span>GEMINI 3.5 FLASH-LITE FORENSIC INGEST</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 font-sans">
               Citizen Environmental Grievance & Forensic Ingest
@@ -296,7 +296,7 @@ export function CitizenReporterPage() {
                   </span>
                   <div>
                     <span className="text-slate-900 font-bold block">Multimodal Optical Ingest</span>
-                    <span>Extracts opacity, soot blackbody radiation, and flame spectrum via Gemini 2.5 Flash.</span>
+                    <span>Extracts opacity, soot blackbody radiation, and flame spectrum via Gemini 3.5 Flash-Lite.</span>
                   </div>
                 </div>
 

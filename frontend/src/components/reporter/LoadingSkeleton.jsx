@@ -22,7 +22,7 @@ export function LoadingSkeleton() {
         <div className="flex items-center justify-between text-2xs font-mono text-blue-400">
           <span className="flex items-center gap-2">
             <Search className="h-3.5 w-3.5 animate-bounce" />
-            <span>RUNNING MULTI-SPECTRAL EMISSION FORENSICS (GEMINI 1.5 PRO)</span>
+            <span>RUNNING MULTI-SPECTRAL EMISSION FORENSICS (GEMINI 3.5 FLASH-LITE)</span>
           </span>
           <span>STEP 3 OF 4</span>
         </div>

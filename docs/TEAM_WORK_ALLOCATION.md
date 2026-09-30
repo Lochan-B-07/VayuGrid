@@ -20,7 +20,7 @@
 │ Lead                          │ Dispatch Queue, Incident Store│ Uvicorn, SQLite/PostGIS, Docker │
 ├───────────────────────────────┼───────────────────────────────┼─────────────────────────────────┤
 │ Member 3: AI/ML & Vernacular  │ Gemini Multimodal Forensics,  │ Google Generative AI SDK,       │
-│ Lead                          │ Strict JSON Schemas, Speech   │ Gemini 1.5/2.5 Flash, Cloud TTS │
+│ Lead                          │ Strict JSON Schemas, Speech   │ Gemini 3.5 Flash-Lite, Web TTS  │
 ├───────────────────────────────┼───────────────────────────────┼─────────────────────────────────┤
 │ Member 4: Geospatial, Physics │ Gaussian Plume Dispersion,    │ Shapely, NumPy, Open-Meteo API, │
 │ & Cloud Lead                  │ Wind Advection, Cloud Run     │ OpenAQ API, GCP Cloud Run       │
@@ -77,7 +77,7 @@
 ---
 
 ### Member 3: AI/ML & Vernacular Intelligence Lead (Gemini Multimodal & Speech Engine)
-* **Goal:** Architect zero-temperature, reliable Gemini Flash multimodal reasoning pipelines with strict JSON schemas and multi-language alert synthesis.
+* **Goal:** Architect zero-temperature, reliable Gemini 3.5 Flash-Lite multimodal reasoning pipelines with strict JSON schemas and multi-language alert synthesis.
 * **Core Responsibilities:**
   1. **Gemini Multimodal Forensic Audit Pipeline:**
      * System prompt engineering for anti-spoofing verification and outdoor environmental validation.
@@ -93,7 +93,7 @@
   2. **Vernacular Translation & Synthesis Engine:**
      * Multi-language translation prompt generator producing JSON across 6 languages:
        `en` (English), `hi` (Hindi), `te` (Telugu), `kn` (Kannada), `ta` (Tamil), `ml` (Malayalam).
-     * Audio synthesis fallback: Google Cloud Text-to-Speech API integration + client-side Web Speech API / synthesized audio blobs.
+     * Audio synthesis: Built-in Browser Web Speech API (`window.speechSynthesis`) with dual-tone emergency broadcast chime (Web Audio API) + optional Cloud TTS fallback.
   3. **AI Evaluation & Test Fixtures:**
      * Create synthetic test image suites (plastic burning, construction site, clean road) to validate model precision and schema adherence.
 * **Key Deliverable Files:**

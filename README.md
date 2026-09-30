@@ -7,12 +7,12 @@
 
 [![Hackathon](https://img.shields.io/badge/Event-Build%20with%20AI%3A%20Code%20for%20Communities-blue?style=for-the-badge&logo=google)](https://hack2skill.com)
 [![Track](https://img.shields.io/badge/Track-Clean%20Air%20%26%20Climate%20Resilience-green?style=for-the-badge)](https://hack2skill.com)
-[![Google AI](https://img.shields.io/badge/Google%20AI-Gemini%20Flash%20Multimodal-orange?style=for-the-badge&logo=google)](https://aistudio.google.com)
-[![Tests: 38 Passing](https://img.shields.io/badge/Tests-38%20Passing-brightgreen?style=for-the-badge)](backend/tests/)
+[![Google AI](https://img.shields.io/badge/Google%20AI-Gemini%203.5%20Flash--Lite-orange?style=for-the-badge&logo=google)](https://aistudio.google.com)
+[![Tests: 62+ Passing](https://img.shields.io/badge/Tests-62%2B%20Passing-brightgreen?style=for-the-badge)](backend/tests/)
 [![Latency: Sub--15ms](https://img.shields.io/badge/Latency-Sub--15ms%20Weak%20PC-success?style=for-the-badge)](backend/tests/test_benchmark_weak_pc.py)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-[Architecture](docs/ARCHITECTURE.md) • [4-Member Work Allocation](docs/TEAM_WORK_ALLOCATION.md) • [Role 4 Handover](docs/ROLE_4_HANDOVER.md) • [API Contracts](docs/API_CONTRACTS.md) • [Pitch Deck](docs/PITCH_DECK.md) • [Demo Script](docs/DEMO_SCRIPT.md)
+[Architecture](docs/ARCHITECTURE.md) • [Integration Plan](docs/INTEGRATION_PLAN.md) • [API Contracts](docs/API_CONTRACTS.md) • [Pitch Deck](docs/PITCH_DECK.md) • [Demo Script](docs/DEMO_SCRIPT.md)
 
 </div>
 
@@ -25,7 +25,7 @@ India's National Clean Air Programme (NCAP) monitors ambient air through Continu
 2. **Elevation vs. Breathing Zone Mismatch:** CAAQMS units are installed 10–15m atop government rooftops, measuring regional averages while missing acute toxic plumes at the 0–2m human breathing zone.
 3. **Passive Metric Display vs. Proactive Enforcement:** Current platforms report numbers (*"AQI is 342 - Very Poor"*) without identifying the emission source, predicting the downwind exposure corridor, or dispatching municipal assets.
 
-**VayuGrid** breaks this paradigm by fusing **macro satellite feeds (Sentinel-5P via Google Earth Engine)**, **meso ground sensors (CPCB/OpenAQ)**, and **micro crowdsourced citizen telemetry** through **Google Gemini Flash Multimodal Forensics** and a **Vectorized, Physics-Constrained Atmospheric Dispersion & Puff Simulation Engine**.
+**VayuGrid** breaks this paradigm by fusing **macro satellite feeds (Sentinel-5P via Google Earth Engine)**, **meso ground sensors (CPCB/OpenAQ)**, and **micro crowdsourced citizen telemetry** through **Google Gemini 3.5 Flash-Lite Multimodal Forensics** and a **Vectorized, Physics-Constrained Atmospheric Dispersion & Puff Simulation Engine**.
 
 ---
 
@@ -45,7 +45,7 @@ India's National Clean Air Programme (NCAP) monitors ambient air through Continu
 +---------------------------------------------------------------------------------------------------------+
 |                                    2. COMPUTATION & REASONING CORE                                      |
 |                                                                                                         |
-|   A. Multimodal Emission Forensic Agent (Gemini 1.5 / 2.5 Flash via Google AI Studio / Vertex AI)       |
+|   A. Multimodal Emission Forensic Agent (Gemini 3.5 Flash-Lite via Google AI Studio / Vertex AI)        |
 |      - Strict JSON Structured Output Schema                                                             |
 |      - Anti-spoofing verification (rejects indoor captures, screenshots)                                |
 |      - 6-Class Source Diagnostic (Waste, Construction Dust, Industrial Stack, Biomass, Traffic, Road)   |
@@ -76,21 +76,6 @@ India's National Clean Air Programme (NCAP) monitors ambient air through Continu
 
 ---
 
-## 👥 4-Member Professional Work Allocation
-
-To ensure rapid, modular, and balanced execution during the hackathon, the system is split across four distinct engineering leads with defined interfaces:
-
-| Member & Role | Core Domain & Ownership | Primary Deliverables | Detailed Plan |
-| :--- | :--- | :--- | :--- |
-| **Member 1: Frontend & UX Lead** | ULB Administrative Command Desk & Citizen PWA | React UI, Google Maps polygon vector rendering, Multi-city selector, Vernacular audio player | [Details](docs/TEAM_WORK_ALLOCATION.md#member-1-frontend--ux-lead-ulb-executive-command--citizen-pwa) |
-| **Member 2: Backend & Systems Lead** | FastAPI REST Core, Ingestion Engine & Dispatch Queue | Data contracts, `/api/v1/incidents/audit`, ticket lifecycle, database models | [Details](docs/TEAM_WORK_ALLOCATION.md#member-2-backend--distributed-systems-lead-fastapi-core--ingestion-engine) |
-| **Member 3: AI/ML & Vernacular Lead** | Gemini Multimodal Forensics & Multilingual Audio | Strict JSON schema prompts, anti-spoofing filter, 6-language translation & speech synthesis | [Details](docs/TEAM_WORK_ALLOCATION.md#member-3-aiml--vernacular-intelligence-lead-gemini-multimodal--speech-engine) |
-| **Member 4: Geospatial & Cloud Lead** | Atmospheric Physics, Weather Telemetry & Deployment | Vectorized Gaussian plume/puff engine, 38 passing tests, Vercel & Cloud Run configs | [Details & Handover](docs/ROLE_4_HANDOVER.md) |
-
-👉 Full breakdown, milestone schedule, and branch strategy: **[`docs/TEAM_WORK_ALLOCATION.md`](docs/TEAM_WORK_ALLOCATION.md)**
-
----
-
 ## 🏙️ Multi-City Demonstration Regional Archetypes
 
 VayuGrid comes pre-configured with 5 distinct regional archetypes across India:
@@ -105,13 +90,18 @@ VayuGrid comes pre-configured with 5 distinct regional archetypes across India:
 
 ## 🗣️ Vernacular Audio Resilience (6 Languages)
 
-To protect non-literate and regional populations, emergency advisories are synthesized in real-time across:
-* **English (en)**
-* **Hindi (hi - हिंदी)**
-* **Telugu (te - తెలుగు)**
-* **Kannada (kn - ಕನ್ನಡ)**
-* **Tamil (ta - தமிழ்)**
-* **Malayalam (ml - മലയാളം)**
+To protect non-literate and regional populations, emergency advisories are synthesized in real-time across 6 Indian languages via Gemini 3.5 Flash-Lite and broadcast via zero-latency client-side Browser Web Speech:
+* **English (en / en-IN)**
+* **Hindi (hi / hi-IN - हिंदी)**
+* **Telugu (te / te-IN - తెలుగు)**
+* **Kannada (kn / kn-IN - ಕನ್ನಡ)**
+* **Tamil (ta / ta-IN - தமிழ்)**
+* **Malayalam (ml / ml-IN - മലയാളം)**
+
+### 🔊 Resilient Audio Architecture
+* **Inbuilt Browser Speech Synthesis (`window.speechSynthesis`):** Instantaneous client-side vocalization mapped to statutory BCP-47 locale tags without requiring external cloud audio credentials.
+* **Dual-Tone Web Audio Chime:** Generates an authentic dual-tone emergency alert frequency (523.25 Hz & 783.99 Hz) via browser Web Audio API oscillator synthesis before every voice broadcast.
+* **Graceful Degradation:** Automatic fallback to standard Indian English broadcast if regional voice packs are absent on the client OS.
 
 ---
 
@@ -145,7 +135,7 @@ uv venv
 source .venv/bin/activate
 uv pip install -r requirements.txt
 
-# Run the 38 automated verification tests
+# Run the 62+ automated verification tests
 uv run pytest -v
 
 # Run the weak-PC benchmark directly (< 15ms median latency)
@@ -204,12 +194,11 @@ vayu-grid/
 ├── vercel.json                  # Root Vercel build & route rules
 ├── README.md                    # Main Project Documentation
 │
-├── docs/                        # Complete Hackathon Deliverables & Specifications
+├── docs/                        # Complete Architecture & System Specifications
 │   ├── ARCHITECTURE.md          # System architecture & Briggs plume mathematics
-│   ├── TEAM_WORK_ALLOCATION.md  # 4-Member professional split, milestones & git flow
-│   ├── ROLE_4_HANDOVER.md       # Member 4 complete engineering handover guide
+│   ├── INTEGRATION_PLAN.md      # Full system integration, verification & component status
 │   ├── API_CONTRACTS.md         # Full REST endpoints & Pydantic JSON schemas
-│   ├── PITCH_DECK.md            # 12-Slide hackathon presentation framework
+│   ├── PITCH_DECK.md            # Hackathon presentation framework
 │   └── DEMO_SCRIPT.md           # 4-Minute video demonstration script & narrative
 │
 ├── backend/                     # Python 3.12 FastAPI Core (managed via uv)
@@ -218,35 +207,20 @@ vayu-grid/
 │   ├── README.md                # Dedicated backend documentation
 │   ├── app/
 │   │   ├── main.py              # Application entrypoint
-│   │   ├── api/                 # REST endpoints (telemetry, dispersion, incidents)
-│   │   ├── core/                # Config, prompts & security
+│   │   ├── api/                 # REST endpoints (telemetry, dispersion, incidents, vernacular)
+│   │   ├── core/                # Config, prompts (Gemini 3.5 Flash-Lite) & security
 │   │   ├── data/                # Sensitive infrastructure GeoJSON datasets
-│   │   ├── models/              # Pydantic v2 schemas (dispersion, weather)
-│   │   └── services/            # Atmospheric dispersion engine & weather service
+│   │   ├── models/              # Pydantic v2 schemas (dispersion, weather, forensic, incident)
+│   │   └── services/            # Atmospheric dispersion engine, Gemini forensics & vernacular
 │   │       └── README.md        # Service-level API reference
-│   └── tests/                   # 38 passing unit, integration & benchmark tests
+│   └── tests/                   # 62+ passing unit, integration & benchmark tests
 │
 └── frontend/                    # React 18 + Vite 5 Web App (managed via pnpm)
     ├── Dockerfile
     ├── package.json
     ├── vercel.json              # Frontend Vercel configuration
-    └── src/                     # UI components, Google Maps wrapper & audio player
+    └── src/                     # UI components, Google Maps wrapper & Web Speech audio player
 ```
-
----
-
-## 🏆 Hackathon Compliance & Deliverables Checklist
-
-* [x] **Public GitHub Repository:** Documented `README.md`, setup scripts, and modular source tree.
-* [x] **4-Member Work Allocation:** Documented in [`docs/TEAM_WORK_ALLOCATION.md`](docs/TEAM_WORK_ALLOCATION.md).
-* [x] **Role 4 Engineering Handover:** Documented in [`docs/ROLE_4_HANDOVER.md`](docs/ROLE_4_HANDOVER.md).
-* [x] **Architecture & Mathematical Specification:** Documented in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
-* [x] **10-12 Slide Pitch Deck Framework:** Documented in [`docs/PITCH_DECK.md`](docs/PITCH_DECK.md).
-* [x] **3-to-5 Minute Demo Video Script:** Documented in [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md).
-* [x] **Production API Contracts:** Documented in [`docs/API_CONTRACTS.md`](docs/API_CONTRACTS.md).
-* [x] **Automated Test Suite:** 38/38 passing tests with sub-15ms weak-PC benchmark.
-* [x] **Deployment Ready:** Root & frontend `vercel.json` and Google Cloud Run deployment scripts prepared.
-* [x] **Google AI Utilization:** Gemini 1.5/2.5 Flash, Google Maps Platform, Google Earth Engine, Cloud TTS/Translation.
 
 ---
 

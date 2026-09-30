@@ -25,6 +25,8 @@ from app.models.forensic import (
     RecommendedULBAction,
     ForensicAuditResult,
     VernacularAdvisories,
+    VernacularAudioRequest,
+    VernacularAudioResponse,
 )
 from app.models.incident import (
     IncidentStatusEnum,
@@ -61,6 +63,8 @@ __all__ = [
     "RecommendedULBAction",
     "ForensicAuditResult",
     "VernacularAdvisories",
+    "VernacularAudioRequest",
+    "VernacularAudioResponse",
     "IncidentStatusEnum",
     "VALID_STATE_TRANSITIONS",
     "CoordinatesModel",

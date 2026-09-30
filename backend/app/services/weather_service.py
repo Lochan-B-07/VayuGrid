@@ -215,8 +215,12 @@ class WeatherService:
         are unreachable or rate-limited. Essential for air-gapped / offline deployments.
         """
         matched_city = None
-        if city_id and city_id.lower() in REGIONAL_ARCHETYPES:
-            matched_city = REGIONAL_ARCHETYPES[city_id.lower()]
+        norm_city = city_id.lower().replace("-", "_") if city_id else None
+        if norm_city == "delhi":
+            norm_city = "delhi_ncr"
+
+        if norm_city and norm_city in REGIONAL_ARCHETYPES:
+            matched_city = REGIONAL_ARCHETYPES[norm_city]
         else:
             matched_city = self.identify_closest_city(lat, lon)
 
@@ -337,9 +341,12 @@ class WeatherService:
                 solar_radiation_w_m2=450.0,
             )
 
+            norm_city = city_id.lower().replace("-", "_") if city_id else None
+            if norm_city == "delhi":
+                norm_city = "delhi_ncr"
             matched_city = (
-                REGIONAL_ARCHETYPES.get(city_id.lower())
-                if city_id and city_id.lower() in REGIONAL_ARCHETYPES
+                REGIONAL_ARCHETYPES.get(norm_city)
+                if norm_city and norm_city in REGIONAL_ARCHETYPES
                 else self.identify_closest_city(lat, lon)
             )
             terrain = matched_city.terrain if matched_city else TerrainCategory.URBAN

@@ -21,7 +21,7 @@
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                        2. GOOGLE AI REASONING & FORENSICS                              │
 ├────────────────────────────────────────────────────────────────────────────────────────┤
-│ • Gemini 1.5/2.5 Flash Multimodal Pipeline                                             │
+│ • Gemini 3.5 Flash-Lite Multimodal Pipeline                                             │
 │ • Anti-Spoofing & Environmental Validation Check                                       │
 │ • 6-Class Emission Diagnostic (Waste / Dust / Industrial / Biomass / Traffic / Road)  │
 │ • Optical Smoke Opacity Index (0.0 to 1.0) & Origin Radius Estimation                  │
@@ -163,7 +163,7 @@ Designed for low-resource environments (municipal ULB control room laptops, edge
 
 | Google Technology | Role in VayuGrid | Implementation Specifics |
 | :--- | :--- | :--- |
-| **Gemini 1.5/2.5 Flash** | Multimodal forensic image inspection & structuring | Uses `response_mime_type: "application/json"` with schema constraints to extract opacity, source classification, and ULB action orders. |
+| **Gemini 3.5 Flash-Lite** | Multimodal forensic image inspection & structuring | Uses `response_mime_type: "application/json"` with schema constraints to extract opacity, source classification, and ULB action orders. |
 | **Google Maps JavaScript API** | Dynamic command center vector rendering | Custom vector overlays displaying multi-tier physical isopleths, legacy cones, hotspot circles, and receptor markers. |
 | **Google Earth Engine (GEE)** | Macro atmospheric baseline mapping | Ingests Sentinel-5P Level-3 tropospheric $NO_2$, Carbon Monoxide ($CO$), and Aerosol Optical Depth ($AOD$). |
 | **Google Cloud Translation & TTS** | Vernacular resilience pipeline | Translates dynamic English incident advisories into Hindi, Telugu, Kannada, Tamil, and Malayalam; synthesizes natural speech audio for mobile browsers. |
