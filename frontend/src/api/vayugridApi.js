@@ -1,11 +1,54 @@
+/**
+ * ============================================================================
+ * VayuGrid Frontend API Client & Dual-Mode Environment Resolver
+ * ============================================================================
+ *
+ * @file vayugridApi.js
+ * @module frontend/src/api/vayugridApi
+ * @description
+ * Primary communications layer between the React GIS frontend and the VayuGrid
+ * atmospheric simulation & incident auditing backend services.
+ *
+ * DUAL-MODE ENVIRONMENT RESOLUTION & ZERO-GCP-CREDITS ARCHITECTURE:
+ * -----------------------------------------------------------------
+ * In typical hackathon evaluations and student project reviews, active paid
+ * Google Cloud Run clusters and persistent PostGIS databases are not available
+ * due to zero GCP credit allocations.
+ *
+ * To solve this, VayuGrid uses an intelligent auto-resolution system:
+ * 1. Production Mode (e.g., `https://vayu-grid.vercel.app`):
+ *    - Automatically sets `API_BASE` to relative `'/api/v1'`.
+ *    - Seamlessly communicates with Vercel Serverless Edge Functions (`api/...`).
+ *    - Eliminates CORS issues, mixed-content errors, and host misconfigurations.
+ * 2. Local Development Mode (`localhost` / `127.0.0.1`):
+ *    - Falls back to the FastAPI Python backend (`http://localhost:8000/api/v1`).
+ * 3. Graceful Fallback:
+ *    - If any endpoint encounters a network timeout, transparently falls back to
+ *      statutory CPCB-grounded baseline datasets, preventing UI crashes.
+ *
+ * PROBLEM STATEMENT ALIGNMENT (AIR POLLUTION ABATEMENT):
+ * ------------------------------------------------------
+ * Provides live telemetry for:
+ * - 5 CPCB Flagship Non-Attainment Cities (Delhi, Bengaluru, Kanpur, Mumbai, Punjab).
+ * - Real-time downwind exposure cones and multi-tier statutory isopleths.
+ * - Sensitive receptor impact evaluations with arrival countdown timers (ETAs).
+ * - Municipal mitigation unit dispatches (smog guns, high-pressure mist tankers).
+ * - 6-language vernacular health alerts (Hindi, Telugu, Kannada, Tamil, Malayalam, English).
+ * ============================================================================
+ */
+
 import { CITIES, DEFAULT_CITY } from '../constants/cities';
 import { MOCK_INCIDENTS_ALL, MOCK_INCIDENT_DELHI } from '../constants/mockData';
 
-const rawUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
-const API_BASE = rawUrl.endsWith('/api/v1') ? rawUrl : `${rawUrl.replace(/\/$/, '')}/api/v1`;
+// Determine execution environment dynamically
+const isBrowser = typeof window !== 'undefined';
+const isProdHost = isBrowser && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+const rawUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || (isProdHost ? '' : 'http://localhost:8000');
+const API_BASE = rawUrl ? (rawUrl.endsWith('/api/v1') ? rawUrl : `${rawUrl.replace(/\/$/, '')}/api/v1`) : '/api/v1';
 
 /**
- * Fetch statutory monitoring cities
+ * Fetch statutory monitoring cities with CPCB station counts and current AQI
+ * @returns {Promise<Array<Object>>} List of monitored cities
  */
 export async function fetchCities() {
   try {
@@ -43,6 +86,8 @@ export async function fetchCities() {
 
 /**
  * Fetch active pollution incidents & dispersion cones for city
+ * @param {string} cityId - Target city identifier (e.g. 'delhi', 'bengaluru')
+ * @returns {Promise<Array<Object>>} List of active incidents with physics cones and sensitive receptors
  */
 export async function fetchActiveIncidents(cityId = 'delhi') {
   const normCityId = cityId === 'delhi_ncr' ? 'delhi' : cityId;
@@ -148,7 +193,9 @@ export async function fetchActiveIncidents(cityId = 'delhi') {
 }
 
 /**
- * Submit citizen photo + GPS for Gemini AI forensic audit
+ * Submit citizen photo + GPS for forensic audit & dispersion modeling
+ * @param {FormData} formData - Multipart form containing image, latitude, longitude, and optional notes
+ * @returns {Promise<Object>} Verified audit payload with dispersion cones and mitigation options
  */
 export async function submitAuditReport(formData) {
   try {
@@ -236,6 +283,9 @@ export async function submitAuditReport(formData) {
 
 /**
  * Dispatch municipal action for an incident
+ * @param {string} ticketId - Incident ticket identifier
+ * @param {Object} actionPayload - Mitigation action details
+ * @returns {Promise<Object>} Statutory dispatch receipt
  */
 export async function dispatchIncidentAction(ticketId, actionPayload) {
   const formattedPayload = {
@@ -272,6 +322,8 @@ export async function dispatchIncidentAction(ticketId, actionPayload) {
 
 /**
  * Converts compass degrees to 16-point meteorological cardinal direction
+ * @param {number} deg - Direction in azimuth degrees [0, 360)
+ * @returns {string} 16-point cardinal compass point (e.g. 'NW', 'ESE')
  */
 function getWindCompassDirection(deg) {
   if (deg === undefined || deg === null) return 'NE';
@@ -281,7 +333,10 @@ function getWindCompassDirection(deg) {
 }
 
 /**
- * Fetch micro-meteorology telemetry
+ * Fetch micro-meteorology telemetry for specified geographic point
+ * @param {number} lat - Latitude in decimal degrees
+ * @param {number} lng - Longitude in decimal degrees
+ * @returns {Promise<Object>} Atmospheric meteorological indicators
  */
 export async function fetchWeatherTelemetry(lat, lng) {
   try {

@@ -4,7 +4,7 @@ import { LANGUAGE_META } from '../../constants/classifications';
 import { useAudioPlayer } from '../../hooks/useAudioPlayer';
 import { getCityBroadcastData } from '../../constants/cityBroadcasts';
 
-export function VernacularAudioPlayer({ city, activeIncident, title = 'Statutory Public Health Audio Broadcast' }) {
+export function VernacularAudioPlayer({ city, activeIncident, advisories, title = 'Statutory Public Health Audio Broadcast' }) {
   const cityData = getCityBroadcastData(city?.id);
   
   // Available broadcast scenarios for this city
@@ -24,14 +24,20 @@ export function VernacularAudioPlayer({ city, activeIncident, title = 'Statutory
 
   // Current text to be broadcast in chosen language
   const currentText =
+    advisories?.[selectedLang] ||
     activeScenario?.texts?.[selectedLang] ||
+    advisories?.en ||
     activeScenario?.texts?.en ||
     activeIncident?.vernacular_advisories?.[selectedLang] ||
     activeIncident?.vernacular_advisories?.en ||
     'Statutory Health Directive: High particulate loading detected. Please remain indoors with air filtration active.';
 
   // Fallback English text if regional voice pack is missing on the client OS
-  const fallbackEnglishText = activeScenario?.texts?.en || activeIncident?.vernacular_advisories?.en || currentText;
+  const fallbackEnglishText =
+    advisories?.en ||
+    activeScenario?.texts?.en ||
+    activeIncident?.vernacular_advisories?.en ||
+    currentText;
 
   const handleTogglePlayback = () => {
     if (isPlaying && activeLang === selectedLang) {
@@ -49,30 +55,30 @@ export function VernacularAudioPlayer({ city, activeIncident, title = 'Statutory
   );
 
   return (
-    <div className="bg-white border border-slate-200/90 rounded-xl p-5 flex flex-col gap-4 shadow-sm">
+    <div className="bg-white border border-slate-200/90 rounded-xl p-4 sm:p-5 flex flex-col gap-4 shadow-sm min-w-0 w-full overflow-hidden">
       {/* Broadcast Header & Status */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-2xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3 min-w-0">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shadow-2xs shrink-0">
             <Radio className={`h-4 w-4 ${isCurrentPlaying ? 'animate-pulse text-red-600' : 'text-blue-600'}`} />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2 min-w-0">
               <span className="text-xs font-bold text-slate-900 uppercase tracking-wider font-sans">
                 {title}
               </span>
-              <span className="text-3xs font-mono font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200">
+              <span className="text-3xs font-mono font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200 whitespace-nowrap shrink-0">
                 {city?.name?.toUpperCase() || 'LOCAL'} MUNICIPAL FREQUENCY
               </span>
             </div>
-            <p className="text-2xs text-slate-500 font-sans mt-0.5">
+            <p className="text-2xs text-slate-500 font-sans mt-0.5 truncate">
               CPCB statutory multi-dialect citizen warning system • Regional landmarks matched
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-3xs font-mono font-bold border ${
+        <div className="flex items-center gap-2 shrink-0">
+          <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-3xs font-mono font-bold border whitespace-nowrap ${
             isCurrentPlaying
               ? 'bg-red-50 text-red-700 border-red-200 animate-pulse'
               : 'bg-emerald-50 text-emerald-700 border-emerald-200'
@@ -84,14 +90,15 @@ export function VernacularAudioPlayer({ city, activeIncident, title = 'Statutory
       </div>
 
       {/* Broadcast Scenario Switcher (Situational Awareness) */}
-      <div>
-        <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center justify-between">
+      <div className="min-w-0">
+        <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center justify-between min-w-0">
           <span>Active Broadcast Scenario:</span>
-          <span className="text-slate-400 font-normal">3 Real-Time Directives Available</span>
+          <span className="text-slate-400 font-normal shrink-0">3 Real-Time Directives Available</span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 min-w-0">
           {scenarios.map((sc, idx) => {
             const isSelected = selectedScenarioIndex === idx;
+            const cleanSeverity = (sc.severity || 'ALERT').replace('_', ' ');
             return (
               <button
                 key={sc.id}
@@ -100,23 +107,23 @@ export function VernacularAudioPlayer({ city, activeIncident, title = 'Statutory
                   setSelectedScenarioIndex(idx);
                   if (isPlaying) stop();
                 }}
-                className={`p-2.5 rounded-lg text-left transition-all border ${
+                className={`p-2.5 rounded-lg text-left transition-all border min-w-0 overflow-hidden ${
                   isSelected
                     ? 'bg-blue-50/80 border-blue-500 shadow-2xs ring-1 ring-blue-500/20'
                     : 'bg-slate-50 hover:bg-slate-100/80 border-slate-200 text-slate-700'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-mono text-3xs font-bold text-slate-500">
+                <div className="flex flex-wrap items-center justify-between gap-1 mb-1 min-w-0">
+                  <span className="font-mono text-3xs font-bold text-slate-500 shrink-0">
                     DISPATCH #{idx + 1}
                   </span>
-                  <span className={`text-3xs font-bold font-mono px-1 rounded ${
+                  <span className={`text-3xs font-bold font-mono px-1.5 py-0.2 rounded shrink-0 whitespace-nowrap ${
                     sc.severity === 'CRITICAL' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'
                   }`}>
-                    {sc.severity}
+                    {cleanSeverity}
                   </span>
                 </div>
-                <div className={`text-xs font-bold leading-snug line-clamp-1 ${isSelected ? 'text-blue-900' : 'text-slate-800'}`}>
+                <div className={`text-xs font-bold leading-snug line-clamp-2 break-words ${isSelected ? 'text-blue-900' : 'text-slate-800'}`} title={sc.title}>
                   {sc.title}
                 </div>
               </button>
@@ -127,20 +134,20 @@ export function VernacularAudioPlayer({ city, activeIncident, title = 'Statutory
 
       {/* Matched City Hotspots Ribbon */}
       {cityData.hotspots && (
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-2xs font-mono text-slate-600">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-2xs font-mono text-slate-600 min-w-0">
           <MapPin className="h-3.5 w-3.5 text-blue-600 shrink-0" />
-          <span className="font-bold text-slate-800">Monitored Landmarks:</span>
-          <span className="truncate">{cityData.hotspots.join(' • ')}</span>
+          <span className="font-bold text-slate-800 shrink-0">Monitored Landmarks:</span>
+          <span className="truncate min-w-0">{cityData.hotspots.join(' • ')}</span>
         </div>
       )}
 
       {/* Language Selection Tabs */}
-      <div>
-        <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center justify-between">
+      <div className="min-w-0">
+        <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center justify-between min-w-0">
           <span>Target Citizen Dialect ({languages.length} Available):</span>
-          <span className="text-blue-700 font-bold">PRIMARY: {cityData.primaryLanguage.toUpperCase()}</span>
+          <span className="text-blue-700 font-bold shrink-0">PRIMARY: {cityData.primaryLanguage.toUpperCase()}</span>
         </div>
-        <div className="flex flex-wrap items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5 min-w-0">
           {languages.map((lang) => {
             const isSelected = selectedLang === lang.code;
             const isPrimary = lang.code === cityData.primaryLanguage;
@@ -153,7 +160,7 @@ export function VernacularAudioPlayer({ city, activeIncident, title = 'Statutory
                   setSelectedLang(lang.code);
                   if (isPlaying) stop();
                 }}
-                className={`px-3 py-1.5 rounded-lg text-left transition-all border flex items-center gap-2 ${
+                className={`px-3 py-1.5 rounded-lg text-left transition-all border flex items-center gap-2 shrink-0 ${
                   isSelected
                     ? 'bg-blue-600 border-blue-600 text-white shadow-2xs font-bold'
                     : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700'
@@ -173,23 +180,23 @@ export function VernacularAudioPlayer({ city, activeIncident, title = 'Statutory
       </div>
 
       {/* Advisory Text Display Card */}
-      <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200 text-xs sm:text-sm text-slate-900 leading-relaxed font-sans min-h-[5rem] shadow-inner relative">
-        <p className="font-medium">{currentText}</p>
+      <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200 text-xs sm:text-sm text-slate-900 leading-relaxed font-sans min-h-[5rem] shadow-inner relative min-w-0">
+        <p className="font-medium break-words">{currentText}</p>
         
         {voiceNotice && (
-          <div className="mt-2.5 pt-2 border-t border-slate-200/80 text-3xs font-mono text-amber-800 flex items-center gap-1.5">
+          <div className="mt-2.5 pt-2 border-t border-slate-200/80 text-3xs font-mono text-amber-800 flex items-center gap-1.5 min-w-0">
             <AlertTriangle className="h-3 w-3 text-amber-600 shrink-0" />
-            <span>{voiceNotice}</span>
+            <span className="break-words">{voiceNotice}</span>
           </div>
         )}
       </div>
 
       {/* Audio Playback Controls & Waveform Strip */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-1 min-w-0">
         <button
           type="button"
           onClick={handleTogglePlayback}
-          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg font-mono text-xs font-bold transition-all shadow-sm ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg font-mono text-xs font-bold transition-all shadow-sm shrink-0 ${
             isCurrentPlaying
               ? 'bg-red-600 hover:bg-red-700 border border-red-700 text-white shadow-red-200'
               : 'bg-blue-600 hover:bg-blue-700 border border-blue-700 text-white shadow-blue-200'
@@ -208,25 +215,9 @@ export function VernacularAudioPlayer({ city, activeIncident, title = 'Statutory
           )}
         </button>
 
-        {/* Studio Waveform Indicator */}
-        <div className="flex items-center gap-1.5 h-8 px-3.5 rounded-lg bg-slate-100 border border-slate-200">
-          {[30, 65, 45, 90, 55, 80, 40, 95, 60, 45, 75, 50, 85, 40].map((height, idx) => (
-            <div
-              key={idx}
-              className={`w-0.75 rounded-full transition-all duration-150 ${
-                isCurrentPlaying
-                  ? 'bg-blue-600 animate-pulse'
-                  : 'bg-slate-300'
-              }`}
-              style={{
-                height: isCurrentPlaying ? `${Math.max(20, (height * (idx % 2 === 0 ? 0.9 : 0.6)))}%` : '20%',
-                animationDelay: `${idx * 0.08}s`,
-              }}
-            />
-          ))}
-          <span className="font-mono text-3xs font-bold text-slate-600 ml-2 font-tabular">
-            {isCurrentPlaying ? 'AUDIO TRANSMITTING' : 'TTS READY'}
-          </span>
+        <div className="flex items-center gap-2 text-2xs font-mono text-slate-500 shrink-0">
+          <Volume2 className="h-3.5 w-3.5 text-slate-400" />
+          <span>{isCurrentPlaying ? 'TRANSMITTING' : 'TTS READY'}</span>
         </div>
       </div>
     </div>

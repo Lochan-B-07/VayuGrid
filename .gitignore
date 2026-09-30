@@ -65,3 +65,4 @@ backend/cache/
 *.sqlite
 *.sqlite3
 
+.vercel

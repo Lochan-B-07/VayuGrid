@@ -154,8 +154,8 @@ export function CitizenReporterPage() {
 
       {/* Main 2-Column Split Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Evidence & Telemetry Ingestion (7 cols = ~58%) */}
-        <div className="lg:col-span-7 space-y-6">
+        {/* Left Column: Evidence & Telemetry Ingestion (Balanced 50/50 Desktop Split) */}
+        <div className="lg:col-span-6 space-y-6 min-w-0 w-full">
           <form onSubmit={handleSubmit} className="bg-white border border-border-subtle rounded-xl p-6 space-y-5 shadow-sm">
             {/* Quick Demo Sample Picker */}
             <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
@@ -247,8 +247,8 @@ export function CitizenReporterPage() {
           </form>
         </div>
 
-        {/* Right Column: Live Audit Pipeline & Result Inspector (5 cols = ~42%) */}
-        <div className="lg:col-span-5 space-y-4">
+        {/* Right Column: Live Audit Pipeline & Result Inspector (Balanced 50/50 Desktop Split) */}
+        <div className="lg:col-span-6 space-y-4 min-w-0 w-full">
           {auditResult ? (
             <div className="space-y-4">
               <div className="flex items-center justify-between">

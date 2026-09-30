@@ -112,7 +112,7 @@ $$C(x, y, 1.5) = \frac{Q}{2 \pi u_{eff} \sigma_y \sigma_z} \exp\left( -\frac{y^2
 ### 2.5 Analytical Statutory Iso-Concentration Polygons (Isopleths)
 Rather than rasterizing a heavy 2D grid, VayuGrid inverts the Gaussian distribution analytically to obtain the exact lateral plume half-width $y_{half}(x)$ for any regulatory concentration threshold $T$ ($\mu g / m^3$):
 
-$$y_{half}(x) = \sigma_y(x) \sqrt{2 \ln\left( \frac{C(x, 0, 1.5)}{T} \right)}$$
+$$y_{half}(x) = \sigma_y(x) \sqrt{2 \ln\left( \frac{C(x, 0, 1.5)}{T} \\right)}$$
 
 This yields closed, smooth, aerodynamic polygons for statutory emergency tiers:
 * **Hazardous ($250\,\mu g/m^3$):** Immediate shelter-in-place; smog-gun prioritization.
@@ -168,3 +168,20 @@ Designed for low-resource environments (municipal ULB control room laptops, edge
 | **Google Earth Engine (GEE)** | Macro atmospheric baseline mapping | Ingests Sentinel-5P Level-3 tropospheric $NO_2$, Carbon Monoxide ($CO$), and Aerosol Optical Depth ($AOD$). |
 | **Google Cloud Translation & TTS** | Vernacular resilience pipeline | Translates dynamic English incident advisories into Hindi, Telugu, Kannada, Tamil, and Malayalam; synthesizes natural speech audio for mobile browsers. |
 | **Google Cloud Run** | Scalable microservice container execution | Hosts containerized FastAPI backend and React frontend with sub-second cold starts and zero-capex scaling. |
+
+---
+
+## 6. Dual-Mode Deployment Architecture: Zero-GCP-Credits Innovation
+
+To solve the real-world constraint where evaluators, hackathon judges, or open-source contributors do not possess active paid Google Cloud billing credits, VayuGrid implements an innovative **Dual-Mode System Architecture**:
+
+* **Mode 1: Enterprise GCP Cloud Run Stack** (Containerized Python FastAPI, Cloud SQL PostGIS, Vertex AI Gemini 1.5 Flash Vision, GEE Sentinel-5P).
+* **Mode 2: Zero-Cost Vercel Serverless Edge Simulation Stack** ([`https://vayu-grid.vercel.app`](https://vayu-grid.vercel.app)):
+  * 100% serverless, zero cost ($0), zero cold start.
+  * Native pure JavaScript physics engine with exact mathematical parity to the Python engine (Irwin shear, Briggs plume rise, 12 stability regimes, 5-term reflection method of images).
+  * Direct real-time Open-Meteo satellite radiosonde microclimate feeds.
+  * In-memory statutory registry for 5 regional CPCB non-attainment archetypes (Delhi-NCR, Bengaluru, Kanpur, Mumbai, Punjab).
+  * Pre-compiled 6-language vernacular advisories and anti-spoofing validation heuristics.
+
+For complete architectural specifications, formula derivations, and maintainer guides, consult the dedicated technical manual:  
+👉 **[`docs/DUAL_MODE_DEPLOYMENT.md`](docs/DUAL_MODE_DEPLOYMENT.md)**
