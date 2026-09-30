@@ -113,29 +113,17 @@ export function VernacularAudioPlayer({ city, activeIncident, advisories, title 
                     : 'bg-slate-50 hover:bg-slate-100/80 border-slate-200 text-slate-700'
                 }`}
               >
-<<<<<<< HEAD
                 <div className="flex flex-wrap items-center justify-between gap-1 mb-1 min-w-0">
                   <span className="font-mono text-3xs font-bold text-slate-500 shrink-0">
                     DISPATCH #{idx + 1}
                   </span>
                   <span className={`text-3xs font-bold font-mono px-1.5 py-0.2 rounded shrink-0 whitespace-nowrap ${
-=======
-                <div className="flex items-center justify-between mb-1 min-w-0">
-                  <span className="font-mono text-3xs font-bold text-slate-500 shrink-0">
-                    DISPATCH #{idx + 1}
-                  </span>
-                  <span className={`text-3xs font-bold font-mono px-1 rounded shrink-0 ${
->>>>>>> 976c0d5 (refactor: enhance responsive layout, overflow handling, and styling for audit result and audio components)
                     sc.severity === 'CRITICAL' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'
                   }`}>
                     {cleanSeverity}
                   </span>
                 </div>
-<<<<<<< HEAD
                 <div className={`text-xs font-bold leading-snug line-clamp-2 break-words ${isSelected ? 'text-blue-900' : 'text-slate-800'}`} title={sc.title}>
-=======
-                <div className={`text-xs font-bold leading-snug truncate min-w-0 ${isSelected ? 'text-blue-900' : 'text-slate-800'}`}>
->>>>>>> 976c0d5 (refactor: enhance responsive layout, overflow handling, and styling for audit result and audio components)
                   {sc.title}
                 </div>
               </button>
