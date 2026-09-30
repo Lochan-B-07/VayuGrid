@@ -17,7 +17,7 @@ export function SeverityBadge({ score, label, className = '' }) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-2xs font-mono font-semibold uppercase tracking-wider border ${badgeStyle} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-2xs font-mono font-semibold uppercase tracking-wider border whitespace-nowrap shrink-0 ${badgeStyle} ${className}`}
     >
       <span className="h-1.5 w-1.5 rounded-full bg-current"></span>
       <span>{displayLabel}</span>
