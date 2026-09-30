@@ -73,29 +73,24 @@ export function AuditResultCard({ result }) {
   const meta = CLASSIFICATION_META[result.classification] || {};
 
   return (
-    <div className="bg-app-surface border border-border-strong rounded-xl p-5 sm:p-6 space-y-5 shadow-xl animate-fade-in min-w-0 w-full overflow-hidden">
+    <div className="bg-white border border-slate-200 rounded-xl p-5 space-y-4 shadow-sm animate-fade-in w-full max-w-full overflow-hidden min-w-0 text-slate-800">
       {/* Top Banner: Verification Status */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border-subtle pb-4 min-w-0">
-        <div className="min-w-0 space-y-1">
-          <div className="flex flex-wrap items-center gap-2 min-w-0">
-            <span className="h-6 px-2.5 rounded bg-emerald-950/80 text-emerald-400 border border-emerald-700/60 font-mono text-2xs font-bold uppercase tracking-wider flex items-center gap-1.5 shrink-0 shadow-2xs">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              <span>FORENSIC VERIFIED</span>
-            </span>
-            <span className="font-mono text-xs font-bold text-slate-200 font-tabular bg-slate-800/90 px-2 py-0.5 rounded border border-slate-700 shrink-0">
-              {result.ticket_id}
-            </span>
-          </div>
-          <p className="text-2xs text-slate-400 font-mono truncate">
-            TIMESTAMP: {new Date(result.timestamp).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
-          </p>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3 min-w-0">
+        <div className="flex flex-wrap items-center gap-2 min-w-0">
+          <span className="h-6 px-2.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 font-mono text-2xs font-bold uppercase tracking-wider flex items-center gap-1.5 shrink-0">
+            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
+            <span>FORENSIC VERIFIED</span>
+          </span>
+          <span className="font-mono text-xs font-bold text-slate-800 font-tabular truncate min-w-0">
+            {result.ticket_id}
+          </span>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0 self-start sm:self-center">
+        <div className="flex items-center gap-3 shrink-0">
           <SeverityBadge score={result.severity_score} />
-          <div className="text-right font-mono shrink-0">
-            <span className="text-2xs text-slate-400 block leading-tight">AI CONFIDENCE</span>
-            <span className="text-xs font-bold text-emerald-400 font-tabular">
+          <div className="text-right font-mono">
+            <span className="text-3xs text-slate-500 block">AI CONFIDENCE</span>
+            <span className="text-xs font-bold text-emerald-700 font-tabular">
               {((result.confidence || 0.94) * 100).toFixed(1)}%
             </span>
           </div>
@@ -103,34 +98,31 @@ export function AuditResultCard({ result }) {
       </div>
 
       {/* Primary Classification & Statutory Standard */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 min-w-0">
-        <div className="bg-app-bg p-3.5 sm:p-4 rounded-lg border border-border-subtle space-y-2 min-w-0">
-          <span className="text-2xs font-semibold uppercase tracking-wider text-slate-400 block">
+      <div className="grid grid-cols-1 gap-3 min-w-0">
+        <div className="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-1.5 min-w-0 overflow-hidden">
+          <span className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-500 block">
             Statutory Source Classification
           </span>
-          <div className="min-w-0">
+          <div className="min-w-0 overflow-hidden">
             <ClassificationTag classificationKey={result.classification} />
           </div>
           {meta.statutoryRef && (
-            <p className="text-2xs font-mono text-slate-400 pt-2 border-t border-border-subtle/60 break-words leading-relaxed">
+            <p className="text-2xs font-mono text-slate-600 mt-2 pt-2 border-t border-slate-200/80 break-words">
               LEGAL CLAUSE: {meta.statutoryRef}
             </p>
           )}
         </div>
 
-        <div className="bg-app-bg p-3.5 sm:p-4 rounded-lg border border-border-subtle space-y-2 min-w-0">
-          <span className="text-2xs font-semibold uppercase tracking-wider text-slate-400 block">
+        <div className="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-1.5 min-w-0 overflow-hidden">
+          <span className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-500 block">
             Automated ULB Mitigation Directive
           </span>
-          <p className="text-xs font-semibold text-amber-300 break-words leading-snug">
+          <p className="text-xs font-bold text-amber-800 break-words">
             {meta.actionRequired || 'Rapid Municipal Squad Dispatch'}
           </p>
-          <div className="flex flex-wrap items-center gap-1.5 text-2xs text-slate-400 font-mono pt-2 border-t border-border-subtle/60">
-            <MapPin className="h-3 w-3 text-slate-400 shrink-0" />
-            <span className="shrink-0">GEO-FENCED WARD:</span>
-            <span className="font-semibold text-slate-200 bg-slate-800/80 px-1.5 py-0.5 rounded border border-slate-700/60 whitespace-nowrap">
-              {result.location?.ward_no || 'Ward 18-N'}
-            </span>
+          <div className="flex items-center gap-1.5 text-2xs text-slate-600 font-mono mt-2 pt-2 border-t border-slate-200/80 min-w-0">
+            <MapPin className="h-3 w-3 text-slate-500 shrink-0" />
+            <span className="truncate">GEO-FENCED WARD: {result.location?.ward_no || 'Ward 18-N'}</span>
           </div>
         </div>
       </div>
@@ -138,17 +130,17 @@ export function AuditResultCard({ result }) {
       {/* Identified Visual Spectral Markers */}
       {result.visual_markers?.length > 0 && (
         <div className="space-y-2 min-w-0">
-          <span className="text-2xs font-semibold uppercase tracking-wider text-slate-400 block">
+          <span className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-600 block">
             Gemini Vision Multi-Spectral Markers Identified:
           </span>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 min-w-0">
+          <div className="grid grid-cols-1 gap-1.5 min-w-0">
             {result.visual_markers.map((marker, idx) => (
               <div
                 key={idx}
-                className="flex items-start gap-2 p-2.5 rounded-lg bg-app-bg/80 border border-border-subtle text-xs text-slate-300 font-sans min-w-0"
+                className="flex items-start gap-2 p-2 rounded-md bg-slate-50 border border-slate-200 text-xs text-slate-700 font-sans min-w-0 overflow-hidden"
               >
-                <CheckCircle className="h-3.5 w-3.5 text-blue-400 shrink-0 mt-0.5" />
-                <span className="break-words leading-snug min-w-0">{marker}</span>
+                <CheckCircle className="h-3.5 w-3.5 text-blue-600 shrink-0 mt-0.5" />
+                <span className="break-words min-w-0">{marker}</span>
               </div>
             ))}
           </div>
@@ -156,8 +148,8 @@ export function AuditResultCard({ result }) {
       )}
 
       {/* Integrated Multilingual Vernacular Audio Broadcast */}
-      <div className="pt-2 min-w-0 w-full overflow-hidden">
-        <VernacularAudioPlayer advisories={result.vernacular_advisories} />
+      <div className="pt-1 min-w-0 overflow-hidden">
+        <VernacularAudioPlayer activeIncident={result} title="Incident Health Warning Broadcast" />
       </div>
     </div>
   );

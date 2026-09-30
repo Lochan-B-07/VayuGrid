@@ -9,11 +9,11 @@ export function ClassificationTag({ classificationKey, className = '' }) {
   };
 
   return (
-    <div className={`flex flex-wrap items-center gap-1.5 min-w-0 ${className}`}>
+    <div className={`flex flex-wrap items-center gap-1.5 min-w-0 max-w-full ${className}`}>
       <span className="font-mono text-2xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shrink-0">
         {meta.code}
       </span>
-      <span className="text-xs font-bold text-slate-900 dark:text-slate-100 break-words leading-snug">
+      <span className="text-xs font-bold text-slate-900 dark:text-slate-100 break-words leading-snug min-w-0">
         {meta.label}
       </span>
     </div>
