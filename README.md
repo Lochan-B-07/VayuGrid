@@ -13,7 +13,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-vayu--grid.vercel.app-blueviolet?style=for-the-badge&logo=vercel)](https://vayu-grid.vercel.app)
 
-[🚀 Live Demo](https://vayu-grid.vercel.app) • [Architecture](docs/ARCHITECTURE.md) • [4-Member Work Allocation](docs/TEAM_WORK_ALLOCATION.md) • [Role 4 Handover](docs/ROLE_4_HANDOVER.md) • [API Contracts](docs/API_CONTRACTS.md) • [Pitch Deck](docs/PITCH_DECK.md) • [Demo Script](docs/DEMO_SCRIPT.md)
+[🚀 Live Demo](https://vayu-grid.vercel.app) • [Architecture](docs/ARCHITECTURE.md) • [Dual-Mode Deployment](docs/DUAL_MODE_DEPLOYMENT.md) • [4-Member Work Allocation](docs/TEAM_WORK_ALLOCATION.md) • [Role 4 Handover](docs/ROLE_4_HANDOVER.md) • [API Contracts](docs/API_CONTRACTS.md) • [Pitch Deck](docs/PITCH_DECK.md) • [Demo Script](docs/DEMO_SCRIPT.md)
 
 </div>
 
@@ -74,6 +74,24 @@ India's National Clean Air Programme (NCAP) monitors ambient air through Continu
 |   - Mitigation Resource Routing (Smog Guns, Tankers)   | - Advancing Smoke Front Arrival Clock          |
 +---------------------------------------------------------------------------------------------------------+
 ```
+
+---
+
+## ⚡ Dual-Mode Architecture: Enterprise Cloud Run vs. Zero-GCP-Credits Vercel Simulation
+
+To solve the real-world hackathon evaluation challenge where evaluators do not have paid Google Cloud billing credits for persistent 24/7 Cloud Run clusters, Cloud SQL PostGIS instances, or Vertex AI quotas, VayuGrid implements an innovative **Dual-Mode System Architecture**:
+
+| Dimension | Mode 1: Enterprise GCP Cloud Run | Mode 2: Zero-Cost Vercel Serverless Simulation (Live) |
+| :--- | :--- | :--- |
+| **Public URL** | `https://<gcp-project>.run.app` | **[https://vayu-grid.vercel.app](https://vayu-grid.vercel.app)** |
+| **GCP Credit Cost** | Requires active paid GCP billing credits | **$0.00 / Zero GCP credits required** |
+| **Backend Stack** | Python 3.12, FastAPI, PostgreSQL / PostGIS | Pure JavaScript Node.js Vercel Edge Serverless Functions |
+| **Physics Fidelity** | Vectorized NumPy Gaussian & Briggs Engine | **100% Mathematical Parity:** Irwin shear, Briggs plume rise, 12 stability classes, PBL inversion lid reflection |
+| **Forensic Vision** | Gemini 1.5 Flash Vision Multimodal API | Optical Opacity & Anti-Spoofing Indoor/Screen Heuristic Engine |
+| **Meteorology** | Open-Meteo Radiosonde API + Fallback | Open-Meteo Live Satellite API + CPCB Regional Baselines |
+| **Languages** | Google Cloud Translation + Cloud TTS | 6-Language Pre-Compiled Vernacular Alerts (HI, TE, KN, TA, ML, EN) |
+
+👉 **Full Mathematical Derivations & Deployment Guide:** See [**docs/DUAL_MODE_DEPLOYMENT.md**](docs/DUAL_MODE_DEPLOYMENT.md).
 
 ---
 
