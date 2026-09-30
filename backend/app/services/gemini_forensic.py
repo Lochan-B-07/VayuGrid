@@ -225,8 +225,10 @@ class GeminiForensicService:
         if pil_image:
             try:
                 rgb = pil_image.convert("RGB")
-                small = rgb.resize((64, 64))
-                pixels = list(small.getdata())
+                try:
+                    pixels = list(small.getdata())
+                except Exception:
+                    pixels = []
                 n = len(pixels)
                 avg_r = sum(p[0] for p in pixels) / n
                 avg_g = sum(p[1] for p in pixels) / n

@@ -17,15 +17,15 @@ router = APIRouter(prefix="/vernacular", tags=["Vernacular Intelligence"])
 
 
 class AdvisorySynthesisRequest(BaseModel):
-    source_classification: str = Field(..., example="OPEN_MUNICIPAL_WASTE_BURNING")
-    severity_score: float = Field(..., ge=0.0, le=1.0, example=0.88)
-    city_name: str = Field(default="Delhi-NCR", example="Delhi-NCR")
+    source_classification: str = Field(..., json_schema_extra={"example": "OPEN_MUNICIPAL_WASTE_BURNING"})
+    severity_score: float = Field(..., ge=0.0, le=1.0, json_schema_extra={"example": 0.88})
+    city_name: str = Field(default="Delhi-NCR", json_schema_extra={"example": "Delhi-NCR"})
     detected_markers: Optional[List[str]] = Field(default_factory=list)
 
 
 class SpeechAudioRequest(BaseModel):
-    text: str = Field(..., example="Dense toxic smoke detected nearby. Vulnerable groups should stay indoors.")
-    language_code: str = Field(..., example="hi")
+    text: str = Field(..., json_schema_extra={"example": "Dense toxic smoke detected nearby. Vulnerable groups should stay indoors."})
+    language_code: str = Field(..., json_schema_extra={"example": "hi"})
 
 
 @router.post("/synthesize", response_model=VernacularAdvisories)
