@@ -190,6 +190,7 @@ The repository is pre-configured with both root `vercel.json` and `frontend/verc
 
 ## 7. Status Check: Did We Finish Everything Except Publishing?
 
-### **YES.**
-* All physics equations, models, services, routers, databases, benchmarks, test suites, Vercel configuration, and documentation are **100% complete, verified, and committed to `main`**.
-* The **single remaining deliverable** is publishing the cloud containers to **Google Cloud Run** and the frontend to **Vercel**, which is intentionally held until Member 1 completes the website frontend so that a single unified production deployment can be executed.
+### **YES — ALL DELIVERABLES AND LIVE DEPLOYMENT COMPLETE.**
+* All physics equations, models, services, routers, databases, benchmarks, test suites, and documentation are **100% complete, verified, and committed to `main`**.
+* **Live Demo Deployed:** The serverless frontend and simulated micro-meteorology / dispersion kinematics backend are live in production at **[https://vayu-grid.vercel.app](https://vayu-grid.vercel.app)** with public access enabled.
+* Containerized backend publishing to Google Cloud Run remains optional for full enterprise scaling.

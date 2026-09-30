@@ -11,8 +11,9 @@
 [![Tests: 38 Passing](https://img.shields.io/badge/Tests-38%20Passing-brightgreen?style=for-the-badge)](backend/tests/)
 [![Latency: Sub--15ms](https://img.shields.io/badge/Latency-Sub--15ms%20Weak%20PC-success?style=for-the-badge)](backend/tests/test_benchmark_weak_pc.py)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-vayu--grid.vercel.app-blueviolet?style=for-the-badge&logo=vercel)](https://vayu-grid.vercel.app)
 
-[Architecture](docs/ARCHITECTURE.md) • [4-Member Work Allocation](docs/TEAM_WORK_ALLOCATION.md) • [Role 4 Handover](docs/ROLE_4_HANDOVER.md) • [API Contracts](docs/API_CONTRACTS.md) • [Pitch Deck](docs/PITCH_DECK.md) • [Demo Script](docs/DEMO_SCRIPT.md)
+[🚀 Live Demo](https://vayu-grid.vercel.app) • [Architecture](docs/ARCHITECTURE.md) • [4-Member Work Allocation](docs/TEAM_WORK_ALLOCATION.md) • [Role 4 Handover](docs/ROLE_4_HANDOVER.md) • [API Contracts](docs/API_CONTRACTS.md) • [Pitch Deck](docs/PITCH_DECK.md) • [Demo Script](docs/DEMO_SCRIPT.md)
 
 </div>
 
