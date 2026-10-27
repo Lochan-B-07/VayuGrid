@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PageShell } from '../components/layout/PageShell';
 import { useApp } from '../context/AppContext';
@@ -7,11 +7,12 @@ import { LiveCounter } from '../components/charts/LiveCounter';
 import { LiveTickerStrip } from '../components/charts/LiveTickerStrip';
 import { 
   Activity, ShieldAlert, Eye, ArrowRight, Wind, Layers, 
-  Cpu, Compass, CheckCircle2, Radio, Zap, AlertTriangle, Building2, Flame, Users 
+  Cpu, Compass, CheckCircle2, Radio, Zap, AlertTriangle, Building2, Flame, Users, FileText, Sparkles, X
 } from 'lucide-react';
 
 export function LandingPage() {
   const { cities, setSelectedCity } = useApp();
+  const [showBanner, setShowBanner] = useState(true);
 
   return (
     <PageShell className="flex flex-col justify-between bg-slate-50 min-h-screen">
@@ -21,6 +22,73 @@ export function LandingPage() {
         <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto space-y-8">
+          {/* Evaluator 90-Second Walkthrough Callout */}
+          {showBanner && (
+            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-4 sm:p-5 shadow-lg border border-blue-700/50 relative overflow-hidden">
+              <div className="flex items-start justify-between gap-4">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-200 border border-blue-400/30 text-3xs font-mono font-bold uppercase tracking-wider">
+                    <Sparkles className="w-3 h-3 text-amber-300" />
+                    <span>SIH 2026 Grand Finale • Evaluator & Judge Walkthrough (90s)</span>
+                  </div>
+                  <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                    Experience VayuGrid's Planetary-to-Pavement Loop in 4 Clicks:
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1">
+                    <Link
+                      to="/report"
+                      className="flex items-center gap-2.5 bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 transition-all text-xs group"
+                    >
+                      <span className="w-6 h-6 rounded-lg bg-blue-500 text-white flex items-center justify-center font-mono font-bold text-xs shrink-0">1</span>
+                      <div className="text-left">
+                        <div className="font-bold text-white group-hover:text-amber-200 transition-colors">Citizen Ingest</div>
+                        <div className="text-3xs text-blue-200">Multimodal Gemini Forensics</div>
+                      </div>
+                    </Link>
+                    <Link
+                      to="/admin"
+                      className="flex items-center gap-2.5 bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 transition-all text-xs group"
+                    >
+                      <span className="w-6 h-6 rounded-lg bg-indigo-500 text-white flex items-center justify-center font-mono font-bold text-xs shrink-0">2</span>
+                      <div className="text-left">
+                        <div className="font-bold text-white group-hover:text-amber-200 transition-colors">ULB Command Desk</div>
+                        <div className="text-3xs text-indigo-200">Gaussian Plume & Dispatch</div>
+                      </div>
+                    </Link>
+                    <Link
+                      to="/citizen"
+                      className="flex items-center gap-2.5 bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 transition-all text-xs group"
+                    >
+                      <span className="w-6 h-6 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-mono font-bold text-xs shrink-0">3</span>
+                      <div className="text-left">
+                        <div className="font-bold text-white group-hover:text-amber-200 transition-colors">Vernacular Advisory</div>
+                        <div className="text-3xs text-emerald-200">6 Indian Languages + Voice</div>
+                      </div>
+                    </Link>
+                    <Link
+                      to="/pitch"
+                      className="flex items-center gap-2.5 bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 transition-all text-xs group"
+                    >
+                      <span className="w-6 h-6 rounded-lg bg-amber-500 text-white flex items-center justify-center font-mono font-bold text-xs shrink-0">4</span>
+                      <div className="text-left">
+                        <div className="font-bold text-white group-hover:text-amber-200 transition-colors">Executive Pitch Deck</div>
+                        <div className="text-3xs text-amber-200">12 Interactive Slides</div>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowBanner(false)}
+                  className="p-1 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition-colors shrink-0"
+                  title="Dismiss guide"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Institutional Badge & Live Status */}
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full bg-white border border-blue-200 text-blue-700 font-mono text-xs font-bold shadow-2xs">
@@ -44,7 +112,7 @@ export function LandingPage() {
               Federated Planetary-to-Pavement Digital Public Good for Air Pollution Governance
             </h1>
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-sans max-w-3xl font-medium">
-              <strong className="text-blue-700 font-bold">VayuGrid (वायु-सूत्र)</strong> connects statutory CPCB IoT sensor telemetry, multimodal Gemini 3.5 Flash-Lite forensic image verification, and atmospheric Gaussian plume physics into an automated municipal enforcement grid.
+              <strong className="text-blue-700 font-bold">VayuGrid (वायु-सूत्र)</strong> connects statutory CPCB IoT sensor telemetry, multimodal Gemini 1.5 Flash forensic image verification, and atmospheric Gaussian plume physics into an automated municipal enforcement grid.
             </p>
           </div>
 
@@ -238,7 +306,7 @@ export function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-700">
             <div className="space-y-1.5 border-l-2 border-indigo-600 pl-3.5">
-              <span className="font-bold text-slate-900 font-mono block">1. GEMINI 3.5 FLASH-LITE FORENSICS</span>
+              <span className="font-bold text-slate-900 font-mono block">1. GEMINI 1.5 FLASH FORENSICS</span>
               <p className="text-2xs text-slate-600 leading-relaxed font-normal">
                 Multimodal classification checks for optical smoke density, flame spectra, and chlorinated polymer pyrolysis with strict JSON schema validation.
               </p>

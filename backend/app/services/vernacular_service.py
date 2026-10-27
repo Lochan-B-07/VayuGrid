@@ -64,7 +64,7 @@ class VernacularService:
 
         # Initialize Gemini for translation if credentials exist
         if HAS_GENAI and self.api_key and self.api_key not in ("your_gemini_api_key_here", "mock_key"):
-            candidate_models = [settings.GEMINI_MODEL, "gemini-3.5-flash-lite", "gemini-flash-lite-latest", "gemini-2.0-flash-lite", "gemini-1.5-flash"]
+            candidate_models = [settings.GEMINI_MODEL, "gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"]
             for cand in candidate_models:
                 try:
                     genai.configure(api_key=self.api_key)

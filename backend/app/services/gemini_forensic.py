@@ -1,12 +1,13 @@
 """
 VayuGrid Gemini Multimodal Forensic Audit Service
 Executes zero-temperature forensic audits of environmental pollution imagery using
-Google Gemini 3.5 Flash-Lite with anti-spoofing verification and strict Pydantic validation.
+Google Gemini 1.5 Flash with anti-spoofing verification and strict Pydantic validation.
 """
 
 import json
 import logging
 import re
+import warnings
 from io import BytesIO
 from typing import Optional, Union, Dict, Any
 
@@ -22,6 +23,9 @@ from app.data.sample_audit_payloads import get_sample_by_city, SPOOFING_REJECTIO
 
 logger = logging.getLogger("vayugrid.gemini_forensic")
 logger.setLevel(logging.INFO)
+
+# Suppress google.generativeai v1 deprecation warning
+warnings.filterwarnings("ignore", category=FutureWarning, module="google.generativeai")
 
 # Attempt to import google.generativeai; handle gracefully if not installed yet
 try:
@@ -46,7 +50,7 @@ class GeminiForensicService:
 
         if HAS_GENAI and self.api_key and self.api_key not in ("your_gemini_api_key_here", "mock_key"):
             candidate_models = [self.model_name]
-            for alt in ["gemini-3.5-flash-lite", "gemini-flash-lite-latest", "gemini-2.0-flash-lite", "gemini-1.5-flash"]:
+            for alt in ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro", "gemini-2.0-flash-exp"]:
                 if alt not in candidate_models:
                     candidate_models.append(alt)
 
@@ -135,13 +139,10 @@ class GeminiForensicService:
 
         candidate_models = [
             self.model_name,
-            "gemini-3.5-flash-lite",
-            "gemini-flash-lite-latest",
-            "gemini-2.5-flash-lite",
-            "gemini-3.1-flash-lite-preview",
-            "gemini-flash-latest",
-            "gemini-2.0-flash-lite",
             "gemini-1.5-flash",
+            "gemini-2.0-flash",
+            "gemini-1.5-pro",
+            "gemini-2.0-flash-exp",
         ]
         # Deduplicate while preserving priority order
         seen = set()
@@ -225,15 +226,16 @@ class GeminiForensicService:
         if pil_image:
             try:
                 rgb = pil_image.convert("RGB")
-                try:
-                    pixels = list(small.getdata())
-                except Exception:
-                    pixels = []
+                small = rgb.resize((32, 32))
+                pixels = list(small.getdata())
                 n = len(pixels)
-                avg_r = sum(p[0] for p in pixels) / n
-                avg_g = sum(p[1] for p in pixels) / n
-                avg_b = sum(p[2] for p in pixels) / n
-                brightness = (avg_r + avg_g + avg_b) / 3.0
+                if n > 0:
+                    avg_r = sum(p[0] for p in pixels) / n
+                    avg_g = sum(p[1] for p in pixels) / n
+                    avg_b = sum(p[2] for p in pixels) / n
+                    brightness = (avg_r + avg_g + avg_b) / 3.0
+                else:
+                    avg_r, avg_g, avg_b, brightness = 128.0, 128.0, 128.0, 128.0
 
                 # 1. Clean outdoor scene (clear sky/road: bright with high blue component)
                 if (avg_b > avg_r * 1.08) and (brightness > 115):

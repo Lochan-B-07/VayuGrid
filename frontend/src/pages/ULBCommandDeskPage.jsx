@@ -16,6 +16,21 @@ export function ULBCommandDeskPage() {
   return (
     <PageShell className="h-[calc(100vh-4rem)] overflow-hidden flex flex-col justify-between bg-slate-50">
       {/* Executive Command Metric Ribbon */}
+      <div className="bg-slate-900 text-white px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 text-3xs font-mono shrink-0 border-b border-slate-800">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span className="text-slate-400">OFFICER ON DUTY:</span>
+          <span className="font-bold text-slate-100">Sh. Rajesh Kumar, Exec. Engineer (Air Quality Cell), MCD Delhi</span>
+          <span className="text-slate-600">|</span>
+          <span className="bg-blue-900/60 text-blue-300 px-1.5 py-0.5 rounded border border-blue-700/50">PARICHAY SSO: DL-ENV-4092</span>
+        </div>
+        <div className="flex items-center gap-3 text-slate-400">
+          <span>STATUTORY DISPATCH AUTHORITY: <strong className="text-emerald-400">ACTIVE</strong></span>
+          <span className="text-slate-600">•</span>
+          <span>AIR ACT SEC 31A / CAQM GRAP IV</span>
+        </div>
+      </div>
+
       <div className="bg-white border-b border-border-subtle px-4 py-2 flex flex-wrap items-center justify-between gap-4 text-xs font-mono shrink-0 shadow-2xs">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">

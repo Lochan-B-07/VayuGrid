@@ -13,11 +13,23 @@ import os
 from PIL import Image, ImageDraw, ImageFilter
 
 
-def create_test_images(output_dir: str = None):
-    """Generates synthetic visual test fixtures for model precision validation."""
+def create_test_images(output_dir: str = None, force_regenerate: bool = False):
+    """Returns visual test fixtures, generating synthetics only if files are missing."""
     if output_dir is None:
         output_dir = os.path.join(os.path.dirname(__file__), "test_images")
     os.makedirs(output_dir, exist_ok=True)
+
+    expected_files = {
+        "plastic_burning": os.path.join(output_dir, "plastic_burning.jpg"),
+        "construction_dust": os.path.join(output_dir, "construction_dust.jpg"),
+        "clean_road": os.path.join(output_dir, "clean_road.jpg"),
+        "indoor_room": os.path.join(output_dir, "indoor_room.jpg"),
+        "industrial_stack": os.path.join(output_dir, "industrial_stack.jpg"),
+        "stubble_burning": os.path.join(output_dir, "stubble_burning.jpg"),
+    }
+
+    if not force_regenerate and all(os.path.exists(p) and os.path.getsize(p) > 0 for p in expected_files.values()):
+        return expected_files
 
     # 1. Plastic Burning (Open Municipal Waste Burning)
     # Dark acrid smoke, fiery orange embers, grey/black debris

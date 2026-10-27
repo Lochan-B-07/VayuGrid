@@ -125,6 +125,22 @@ export function AppProvider({ children }) {
     }
   }, [activeIncident, showToast]);
 
+  // Adapter: bridges { type, title, message } signature to showToast(message, type)
+  const addToast = useCallback(({ type = 'info', title = '', message = '' } = {}) => {
+    const text = message ? (title ? `${title}: ${message}` : message) : title;
+    showToast(text || 'Notification', (type || 'info').toLowerCase());
+  }, [showToast]);
+
+  // Adapter: local status update for incidents
+  const updateIncidentStatus = useCallback((ticketId, newStatus) => {
+    setIncidents(prev => prev.map(inc =>
+      inc.ticket_id === ticketId ? { ...inc, status: newStatus } : inc
+    ));
+    if (activeIncident?.ticket_id === ticketId) {
+      setActiveIncident(prev => ({ ...prev, status: newStatus }));
+    }
+  }, [activeIncident]);
+
   const value = {
     cities,
     selectedCity,
@@ -136,8 +152,10 @@ export function AppProvider({ children }) {
     isLoadingIncidents,
     refreshIncidents: () => loadCityData(selectedCity),
     dispatchAction: handleDispatchAction,
+    updateIncidentStatus,
     toast,
     showToast,
+    addToast,
     clearToast: () => setToast(null),
     istTime,
   };

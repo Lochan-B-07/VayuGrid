@@ -20,27 +20,26 @@ export function CitizenReporterPage() {
   const { coords, status: gpsStatus, error: gpsError, acquireLocation, setManualCoords } = useGeolocation();
   const { addToast } = useApp();
 
-  const handleQuickSampleSelect = (type) => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 400;
-    canvas.height = 300;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#f1f5f9';
-    ctx.fillRect(0, 0, 400, 300);
-    ctx.fillStyle = '#dc2626';
-    ctx.font = 'bold 20px monospace';
-    ctx.fillText(`${type.toUpperCase()} EVIDENCE`, 30, 150);
-
-    canvas.toBlob((blob) => {
+  const handleQuickSampleSelect = async (type) => {
+    try {
+      const res = await fetch(`/samples/${type}.jpg`);
+      if (!res.ok) throw new Error('Sample not found');
+      const blob = await res.blob();
       const sampleFile = new File([blob], `${type}_evidence.jpg`, { type: 'image/jpeg' });
       setFile(sampleFile);
-      setNotes(`Automated forensic sample: ${type.replace('_', ' ')} detected at coordinate boundary.`);
+      setNotes(`Forensic field sample: ${type.replace(/_/g, ' ')} — authentic image submitted for AI forensic audit.`);
       addToast({
         type: 'INFO',
-        title: 'Sample Telemetry Loaded',
-        message: `Loaded synthetic ${type.replace('_', ' ')} evidence for evaluation.`,
+        title: 'Authentic Sample Loaded',
+        message: `Loaded verified ${type.replace(/_/g, ' ')} field photograph.`,
       });
-    });
+    } catch (err) {
+      addToast({
+        type: 'WARNING',
+        title: 'Sample Unavailable',
+        message: 'Could not load sample image from server.',
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -135,7 +134,7 @@ export function CitizenReporterPage() {
           <div className="space-y-1">
             <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 font-mono text-2xs font-bold">
               <Sparkles className="h-3 w-3 text-blue-600" />
-              <span>GEMINI 3.5 FLASH-LITE FORENSIC INGEST</span>
+              <span>GEMINI 1.5 FLASH FORENSIC INGEST</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 font-sans">
               Citizen Environmental Grievance & Forensic Ingest
@@ -183,6 +182,20 @@ export function CitizenReporterPage() {
                   className="px-3 py-1.5 rounded-md bg-blue-50 border border-blue-200 hover:border-blue-400 text-blue-700 font-mono text-2xs font-bold transition-all shadow-2xs"
                 >
                   🏗️ Construction Dust
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickSampleSelect('industrial_stack')}
+                  className="px-3 py-1.5 rounded-md bg-purple-50 border border-purple-200 hover:border-purple-400 text-purple-700 font-mono text-2xs font-bold transition-all shadow-2xs"
+                >
+                  🏭 Industrial Stack
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickSampleSelect('clean_road')}
+                  className="px-3 py-1.5 rounded-md bg-emerald-50 border border-emerald-200 hover:border-emerald-400 text-emerald-800 font-mono text-2xs font-bold transition-all shadow-2xs"
+                >
+                  ✅ Clean Baseline
                 </button>
               </div>
             </div>
@@ -296,7 +309,7 @@ export function CitizenReporterPage() {
                   </span>
                   <div>
                     <span className="text-slate-900 font-bold block">Multimodal Optical Ingest</span>
-                    <span>Extracts opacity, soot blackbody radiation, and flame spectrum via Gemini 3.5 Flash-Lite.</span>
+                    <span>Extracts opacity, soot blackbody radiation, and flame spectrum via Gemini 1.5 Flash.</span>
                   </div>
                 </div>
 

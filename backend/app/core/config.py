@@ -18,7 +18,7 @@ class Settings(BaseSettings):
 
     # Google Gemini AI & Generative AI SDK
     GEMINI_API_KEY: Optional[str] = None
-    GEMINI_MODEL: str = "gemini-3.5-flash-lite"
+    GEMINI_MODEL: str = "gemini-1.5-flash"
     GEMINI_TEMPERATURE: float = 0.0  # Zero-temperature for deterministic forensic audit
 
     # Google Cloud & Text-to-Speech

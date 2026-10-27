@@ -4,7 +4,7 @@ import { SeverityBadge } from '../ui/SeverityBadge';
 import { ClassificationTag } from '../ui/ClassificationTag';
 import { 
   Building2, ShieldAlert, AlertTriangle, CheckCircle2, 
-  MapPin, Wind, Eye, FileText, Send, Zap, Clock, ShieldCheck, Sparkles 
+  MapPin, Wind, Eye, FileText, Send, Zap, Clock, ShieldCheck, Sparkles, XCircle
 } from 'lucide-react';
 
 export function IncidentDetailDesk() {
@@ -28,6 +28,8 @@ export function IncidentDetailDesk() {
   }
 
   const isDispatched = activeIncident.status === 'DISPATCHED';
+  const isRejected = activeIncident.status === 'REJECTED_FALSE_POSITIVE';
+  const isActionTaken = isDispatched || isRejected;
 
   const handleQuickDispatch = (action) => {
     setIsDispatching(true);
@@ -40,6 +42,15 @@ export function IncidentDetailDesk() {
         message: `${action.label} initiated under CAQM GRAP IV framework.`,
       });
     }, 600);
+  };
+
+  const handleRejectIncident = () => {
+    updateIncidentStatus(activeIncident.ticket_id, 'REJECTED_FALSE_POSITIVE');
+    addToast({
+      type: 'WARNING',
+      title: 'Incident Flagged as False Positive',
+      message: `Ticket ${activeIncident.ticket_id} dismissed under Rule 14 verification guidelines.`,
+    });
   };
 
   return (
@@ -62,9 +73,13 @@ export function IncidentDetailDesk() {
           <span>INGESTED: {new Date(activeIncident.timestamp).toLocaleTimeString()} IST</span>
           <span>•</span>
           <span className={`font-bold px-1.5 py-0.2 rounded text-3xs border ${
-            isDispatched ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-amber-50 text-amber-800 border-amber-200'
+            isDispatched 
+              ? 'bg-emerald-50 text-emerald-800 border-emerald-200' 
+              : isRejected 
+                ? 'bg-rose-50 text-rose-800 border-rose-200' 
+                : 'bg-amber-50 text-amber-800 border-amber-200'
           }`}>
-            {activeIncident.status}
+            {isRejected ? 'REJECTED (FALSE POSITIVE)' : activeIncident.status}
           </span>
         </div>
       </div>
@@ -155,11 +170,13 @@ export function IncidentDetailDesk() {
               <button
                 key={action.action_id}
                 onClick={() => handleQuickDispatch(action)}
-                disabled={isDispatched || isDispatching}
+                disabled={isActionTaken || isDispatching}
                 className={`w-full p-3.5 rounded-xl border text-left font-mono transition-all flex flex-col justify-between ${
                   isDispatched
                     ? 'bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed'
-                    : 'bg-white hover:bg-blue-50/50 border-blue-300 text-slate-900 hover:border-blue-500 shadow-sm hover:shadow-md'
+                    : isRejected
+                      ? 'bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed opacity-60'
+                      : 'bg-white hover:bg-blue-50/50 border-blue-300 text-slate-900 hover:border-blue-500 shadow-sm hover:shadow-md'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -180,6 +197,25 @@ export function IncidentDetailDesk() {
                 </div>
               </button>
             ))}
+
+            {/* Officer False Positive Dismissal Option */}
+            {!isActionTaken && (
+              <button
+                type="button"
+                onClick={handleRejectIncident}
+                className="w-full mt-2 py-2 px-3 rounded-lg border border-slate-300 hover:border-rose-300 hover:bg-rose-50/50 text-slate-600 hover:text-rose-700 font-mono text-2xs font-bold transition-all flex items-center justify-center gap-1.5"
+              >
+                <XCircle className="w-3.5 h-3.5 text-rose-500" />
+                <span>Flag as False Positive / Dismiss Ticket</span>
+              </button>
+            )}
+
+            {isRejected && (
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-2xs text-rose-800 font-mono flex items-center gap-2">
+                <XCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                <span>Ticket dismissed as False Positive by Officer on Duty. No municipal units dispatched.</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

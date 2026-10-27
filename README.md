@@ -25,7 +25,7 @@ India's National Clean Air Programme (NCAP) monitors ambient air through Continu
 2. **Elevation vs. Breathing Zone Mismatch:** CAAQMS units are installed 10–15m atop government rooftops, measuring regional averages while missing acute toxic plumes at the 0–2m human breathing zone.
 3. **Passive Metric Display vs. Proactive Enforcement:** Current platforms report numbers (*"AQI is 342 - Very Poor"*) without identifying the emission source, predicting the downwind exposure corridor, or dispatching municipal assets.
 
-**VayuGrid** breaks this paradigm by fusing **macro satellite feeds (Sentinel-5P via Google Earth Engine)**, **meso ground sensors (CPCB/OpenAQ)**, and **micro crowdsourced citizen telemetry** through **Google Gemini 3.5 Flash-Lite Multimodal Forensics** and a **Vectorized, Physics-Constrained Atmospheric Dispersion & Puff Simulation Engine**.
+**VayuGrid** breaks this paradigm by fusing **macro satellite feeds (Sentinel-5P via Google Earth Engine)**, **meso ground sensors (CPCB/OpenAQ)**, and **micro crowdsourced citizen telemetry** through **Google Gemini 1.5 Flash Multimodal Forensics** and a **Vectorized, Physics-Constrained Atmospheric Dispersion & Puff Simulation Engine**.
 
 ---
 
@@ -45,7 +45,7 @@ India's National Clean Air Programme (NCAP) monitors ambient air through Continu
 +---------------------------------------------------------------------------------------------------------+
 |                                    2. COMPUTATION & REASONING CORE                                      |
 |                                                                                                         |
-|   A. Multimodal Emission Forensic Agent (Gemini 3.5 Flash-Lite via Google AI Studio / Vertex AI)        |
+|   A. Multimodal Emission Forensic Agent (Gemini 1.5 Flash via Google AI Studio / Vertex AI)        |
 |      - Strict JSON Structured Output Schema                                                             |
 |      - Anti-spoofing verification (rejects indoor captures, screenshots)                                |
 |      - 6-Class Source Diagnostic (Waste, Construction Dust, Industrial Stack, Biomass, Traffic, Road)   |
@@ -90,7 +90,7 @@ VayuGrid comes pre-configured with 5 distinct regional archetypes across India:
 
 ## 🗣️ Vernacular Audio Resilience (6 Languages)
 
-To protect non-literate and regional populations, emergency advisories are synthesized in real-time across 6 Indian languages via Gemini 3.5 Flash-Lite and broadcast via zero-latency client-side Browser Web Speech:
+To protect non-literate and regional populations, emergency advisories are synthesized in real-time across 6 Indian languages via Gemini 1.5 Flash and broadcast via zero-latency client-side Browser Web Speech:
 * **English (en / en-IN)**
 * **Hindi (hi / hi-IN - हिंदी)**
 * **Telugu (te / te-IN - తెలుగు)**
@@ -208,7 +208,7 @@ vayu-grid/
 │   ├── app/
 │   │   ├── main.py              # Application entrypoint
 │   │   ├── api/                 # REST endpoints (telemetry, dispersion, incidents, vernacular)
-│   │   ├── core/                # Config, prompts (Gemini 3.5 Flash-Lite) & security
+│   │   ├── core/                # Config, prompts (Gemini 1.5 Flash) & security
 │   │   ├── data/                # Sensitive infrastructure GeoJSON datasets
 │   │   ├── models/              # Pydantic v2 schemas (dispersion, weather, forensic, incident)
 │   │   └── services/            # Atmospheric dispersion engine, Gemini forensics & vernacular

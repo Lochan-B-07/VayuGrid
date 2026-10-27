@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
-import { Wind, ShieldAlert, Radio, Activity, MapPin, Eye } from 'lucide-react';
+import { Wind, ShieldAlert, Radio, Activity, MapPin, Eye, FileText } from 'lucide-react';
 import { CitySelector } from '../ui/CitySelector';
 
 export function TopBar() {
@@ -12,6 +12,7 @@ export function TopBar() {
     { to: '/admin', label: 'ULB Command Desk', icon: Activity },
     { to: '/report', label: 'Citizen Forensic Ingest', icon: ShieldAlert },
     { to: '/citizen', label: 'Public Air Guard', icon: Eye },
+    { to: '/pitch', label: 'Pitch Deck', icon: FileText },
   ];
 
   return (
